@@ -1,0 +1,16 @@
+.section__title {
+  font-size: 22px;
+  letter-spacing: -0.88px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #DADADA;
+  margin:0;
+  font-weight:400;
+}
+
+@media (max-width: 767px) {
+  .section__title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    padding-bottom: 27px;
+  }
+}

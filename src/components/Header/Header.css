@@ -1,0 +1,120 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  background-color: #073042;
+}
+
+.header__top {
+  padding: 18px 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__auth {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.header__register-link {
+  color: #FFF;
+  text-align: right;
+  font-size: 12px;
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.header__register-link:hover {
+  opacity: 0.8;
+}
+
+.header__login-button {
+  background-color: #3DDC84;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;;
+  color: #000000;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.header__login-button:hover {
+  opacity: 0.8;
+}
+
+.header__title {
+  color: #FFF;
+  font-size: 40px;
+  font-family: Inter;
+  line-height: 52px;
+  letter-spacing: -1.6px;
+  max-width:626px;
+  margin: 50px auto 0 70px;
+  font-weight:400;
+}
+
+.header__project-logo {
+  max-width: 722px;
+  max-height:244px;
+  opacity: 0.7;
+  margin: 102px 70px 60px auto;
+}
+
+@media (max-width: 1279px) {
+
+  .header__top {
+    padding: 18px 30px;
+  }
+
+  .header__title {
+    width: calc(100% - 44px * 2);
+    text-align: center;
+    margin: 300px auto 0 auto;
+  }
+
+  .header__project-logo {
+    width: calc(100% - 44px * 2);
+    margin: 140px auto 70px auto;
+  }
+}
+
+@media (max-width: 320px){
+  .header__top {
+    padding: 18px 14px;
+  }
+
+  .header__auth {
+    gap: 14px;
+  }
+
+  .header__register-link {
+    font-size: 10px;
+  }
+
+  .header__login-button {
+    padding: 5px 12px;
+    font-size: 10px;
+  }
+
+  .header__title {
+    width: calc(100% - 10px * 2);
+    font-size: 31px;
+    margin: 183px auto 0 auto;
+    line-height: 39px;
+    letter-spacing: -1.24px;
+  }
+
+  .header__project-logo {
+    width: 320px;
+    height: 230px;
+    margin: 60px 0 40px 0;
+    object-fit: cover;
+  }
+}

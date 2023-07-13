@@ -1,0 +1,8 @@
+.page {
+  display: flow-root;
+  background-color:#202020;
+  min-width:320px;
+  min-height: 100vh;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+}
