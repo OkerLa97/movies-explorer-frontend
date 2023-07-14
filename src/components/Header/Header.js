@@ -1,22 +1,62 @@
 import React from "react";
-import logo from '../../images/logo.svg';
-import projectLogo from '../../images/project-logo.svg';
 import { Link } from "react-router-dom";
 
+import logo from '../../images/logo.svg';
+import IconBurger from "../../images/icon_burger.svg";
+import IconAccount from "../../images/icon_account.svg";
+import IconMenuClose from "../../images/icon_menu_close.svg";
+
 class Header extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      isMenuOpen: false
+    }
+  }
+
+  handleMenuBurgerClick = () => {
+    this.setState({
+      isMenuOpen: true
+    });
+  }
+
+  handleMenuCloseClick = () => {
+    this.setState({
+      isMenuOpen: false
+    });
+  }
 
   render(){
     return (
       <header className="header">
-        <div className="header__top">
-          <img className="header__logo" src={logo} alt="Логотип Diploma" />
-          <div className="header__auth">
-            <Link className="header__register-link" to="/signup">Регистрация</Link>
-            <Link className="header__login-button" to="/signin">Войти</Link>
-          </div>
+        <div className="header__mobile">
+          <Link className="header__link" to="/">
+            <img className="header__logo" src={logo} alt="Логотип Diploma" />
+          </Link>
+          <img className="header__menu-burger" src={IconBurger} onClick={this.handleMenuBurgerClick} alt="Открыть Меню" />
         </div>
-        <h1 className="header__title">Учебный проект студента факультета Веб-разработки.</h1>
-        <img className="header__project-logo" src={projectLogo} alt="Логотип Diploma" />
+        <nav className={this.state.isMenuOpen ? "header__nav header__nav-open" : "header__nav"}>
+          <div className="header__nav-mobile-cover" />
+          <div className="header__nav-container">
+            <img className="header__menu-close" src={IconMenuClose} onClick={this.handleMenuCloseClick} alt="Закрыть Меню" />
+            <ul className="header__links">
+              <li className="header__link-item">
+                <a className="header__link" href="#!">Главная</a>
+              </li>
+              <li className="header__link-item">
+                <Link className={this.props.route === "movies" ? "header__link header__link-active" : "header__link"} to="/movies">Фильмы</Link>
+              </li>
+              <li className="header__link-item">
+                <Link className={this.props.route === "saved-movies" ? "header__link header__link-active" : "header__link"} to="/saved-movies">Сохранённые фильмы</Link>
+              </li>
+            </ul>
+            <div className="header__account">
+              <Link className="header__account-link" to="/profile">Аккаунт</Link>
+              <img className="header__account-icon" src={IconAccount} alt="Иконка аккаунта" />
+            </div>
+          </div>
+        </nav>
       </header>
     )
   }

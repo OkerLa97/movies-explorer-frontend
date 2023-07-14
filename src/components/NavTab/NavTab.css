@@ -1,0 +1,79 @@
+.navtab {
+  padding: 18px 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navtab__auth {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navtab__register-link {
+  color: #FFF;
+  text-align: right;
+  font-size: 12px;
+  font-family: Inter;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.navtab__link {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.navtab__link:hover {
+  opacity: 0.8;
+}
+
+.navtab__register-link:hover {
+  opacity: 0.8;
+}
+
+.navtab__login-button {
+  background-color: #3DDC84;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;;
+  color: #000000;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.navtab__login-button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 1279px){
+
+  .navtab {
+    padding: 18px 30px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .navtab {
+    padding:18px 14px;
+  }
+
+  .navtab__auth {
+    gap: 14px;
+  }
+
+  .navtab__register-link {
+    font-size: 10px;
+  }
+
+  .navtab__login-button {
+    padding: 5px 12px;
+    font-size: 10px;
+  }
+}

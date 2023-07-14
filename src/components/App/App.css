@@ -2,7 +2,9 @@
   display: flow-root;
   background-color:#202020;
   min-width:320px;
-  min-height: 100vh;
+  min-height: 120vh;
   color: #FFFFFF;
   font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  position: relative;
 }

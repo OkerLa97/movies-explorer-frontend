@@ -1,0 +1,153 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  max-width:396px;
+  margin: 70px auto;
+}
+
+.login__logo-link {
+  width: 38px;
+  height: 38px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.login__logo-link:hover {
+  opacity: 0.8;
+}
+
+.login__logo {
+  width: 38px;
+  height: 38px;
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.login__title {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  margin: 40px 0 22px 0;
+}
+
+.login__label {
+  color: #8B8B8B;
+  font-size: 10px;
+  font-weight: 400;
+  margin: 21px 0 10px 0;
+}
+
+.login__field {
+  border-radius: 8px;
+  background: #2F2F2F;
+  padding:15px;
+  color: #FFF;
+  font-size: 13px;
+  font-weight: 400;
+  border:none;
+  letter-spacing: 0.1px;
+}
+
+.login__field-error {
+  color: #EE3465;
+}
+
+.login__field-error::placeholder {
+  color: #EE3465;
+}
+
+.login__error-label {
+  min-height: 23px;
+  margin-top:12px;
+  color: #EE3465;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.login__submit-btn {
+  margin-top: 145px;
+  border-radius: 3px;
+  background: #4285F4;
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  border:0;
+  padding: 14px;
+  letter-spacing: 0.1px;
+  transition: opacity 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.login__submit-btn:hover {
+  opacity: 0.8;
+}
+
+.login__login {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.login__login-is-login-label {
+  color: #8B8B8B;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.login__link {
+  color: #4285F4;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.login__link:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 1279px){
+  .login {
+    margin: 232px auto;
+  }
+}
+
+@media (max-width: 767px){
+  .login {
+    margin: 56px auto 0 auto;
+    width: calc(100% - 30px * 2);
+  }
+
+  .login__logo {
+    margin: auto;
+  }
+
+  .login__logo-link {
+    margin: auto;
+  }
+
+  .login__title {
+    text-align: center;
+    margin: 51px 0 61px 0;
+  }
+
+  .login__submit-btn {
+    margin-top: 233px;
+    font-size: 12px;
+    padding:15px;
+  }
+
+  .login__login-is-login-label {
+    font-size: 12px;
+  }
+
+  .login__link {
+    font-size: 12px;
+  }
+}

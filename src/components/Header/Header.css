@@ -1,120 +1,216 @@
 .header {
-  display: flex;
-  flex-direction: column;
-  background-color: #073042;
-}
-
-.header__top {
   padding: 18px 70px;
   display: flex;
   justify-content: space-between;
 }
 
-.header__auth {
+.header__mobile {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__menu-burger {
+  display: none;
+}
+
+.header__menu-close {
+  display: none;
+}
+
+.header__logo {
+  width: 38px;
+  height: 38px;
+}
+
+.header__link {
+  width: 38px;
+  height: 38px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.header__link:hover {
+  opacity: 0.8;
+}
+
+.header__nav {
   display: flex;
   align-items: center;
-  gap: 30px;
+  margin:0;
+  padding:0;
+  gap: 31px;
+  z-index: 10;
 }
 
-.header__register-link {
-  color: #FFF;
-  text-align: right;
-  font-size: 12px;
-  font-family: Inter;
-  font-weight: 500;
-  line-height: 16px;
+.header__links {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.header__nav-container {
+  display: flex;
+  align-items: center;
+  gap: 31px;
+}
+
+.header__link-item {
+  list-style: none;
+  margin-right: 20px;
+}
+
+.header__link {
   text-decoration: none;
-  transition: opacity 0.3s ease-in-out;
+  color: #FFFFFF;
+  font-size: 14px;
 }
 
-.header__register-link:hover {
-  opacity: 0.8;
+.header__link-active {
+  position: relative;
 }
 
-.header__login-button {
-  background-color: #3DDC84;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 20px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 16px;;
-  color: #000000;
-  cursor: pointer;
+.header__link-active::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #FFFFFF;
+  margin-top: 7px;
+}
+
+.header__account-link {
   text-decoration: none;
-  transition: opacity 0.3s ease-in-out;
+  color: #FFFFFF;
+  font-size: 14px;
 }
 
-.header__login-button:hover {
-  opacity: 0.8;
+.header__link-item:first-child {
+  display: none;
 }
 
-.header__title {
-  color: #FFF;
-  font-size: 40px;
-  font-family: Inter;
-  line-height: 52px;
-  letter-spacing: -1.6px;
-  max-width:626px;
-  margin: 50px auto 0 70px;
-  font-weight:400;
+.header__account {
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 
-.header__project-logo {
-  max-width: 722px;
-  max-height:244px;
-  opacity: 0.7;
-  margin: 102px 70px 60px auto;
+.header__account-icon {
+  border-radius: 4px;
+  background-color: #313131;
+  padding: 9px 7.25px;
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 768px){
 
-  .header__top {
-    padding: 18px 30px;
+  .header {
+   padding: 18px 30px;
   }
 
-  .header__title {
-    width: calc(100% - 44px * 2);
-    text-align: center;
-    margin: 300px auto 0 auto;
+  .header__mobile {
+    width: 100%;
   }
 
-  .header__project-logo {
-    width: calc(100% - 44px * 2);
-    margin: 140px auto 70px auto;
+  .header__menu-burger {
+    display: block;
+  }
+
+  .header__menu-close {
+    display: block;
+    margin: 22px 22px 0 auto;
+  }
+
+  .header__nav-container {
+    flex-direction: column;
+  }
+
+  .header__links {
+    flex-direction: column;
+    margin-top: 76px;
+    gap: 30px;
+  }
+
+  .header__link-item:first-child {
+    display: block;
+  }
+
+  .header__nav {
+    left: 100%;
+    top: 0;
+    width: 100vw;
+    height: 120%;
+    position: absolute;
+    gap:0;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .header__nav.header__nav-open {
+    left:0%;
+  }
+
+  .header__link {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .header__link-item {
+    margin:0;
+  }
+
+  .header__nav-container {
+    min-width: 520px;
+    height: 100%;
+    background-color: #202020;
+  }
+
+  .header__nav-mobile-cover {
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.3;
+  }
+
+  .header__account {
+    margin-top: 587px;
+  }
+
+  .header__account-link {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 520px){
+
+  .header__nav-mobile-cover {
+    display: none;
+  }
+
+  .header__nav-container {
+    min-width:320px;
+    width: 100%;
   }
 }
 
 @media (max-width: 320px){
-  .header__top {
+
+  .header {
     padding: 18px 14px;
   }
 
-  .header__auth {
-    gap: 14px;
+  .header__menu-close {
+    margin: 13px 13px 0 auto
   }
 
-  .header__register-link {
-    font-size: 10px;
+  .header__links {
+    margin-top: 70px;
+    gap: 25px;
   }
 
-  .header__login-button {
-    padding: 5px 12px;
-    font-size: 10px;
-  }
-
-  .header__title {
-    width: calc(100% - 10px * 2);
-    font-size: 31px;
-    margin: 183px auto 0 auto;
-    line-height: 39px;
-    letter-spacing: -1.24px;
-  }
-
-  .header__project-logo {
-    width: 320px;
-    height: 230px;
-    margin: 60px 0 40px 0;
-    object-fit: cover;
+  .header__menu-burger {
+    width: 34px;
+    margin-right: 3px;
+    height: 39px;
   }
 }
