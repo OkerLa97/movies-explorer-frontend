@@ -68,7 +68,10 @@ class Register extends React.Component {
     return (
       <main>
         <section className="register">
-          <img className="register__logo" src={logo} alt="Логотип Diploma" />
+
+          <Link className="register__logo-link" to="/" replace >
+            <img className="register__logo" src={logo} alt="Логотип Diploma" />
+          </Link>
           <form className="register__form" onSubmit={this.handleSubmit}>
             <h1 className="register__title">Добро пожаловать!</h1>
 
