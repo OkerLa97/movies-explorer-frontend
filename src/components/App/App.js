@@ -7,6 +7,7 @@ import Register from '../Register/Register';
 import Login from "../Login/Login";
 import Movies from "../Movies/Movies";
 import Profile from "../Profile/Profile";
+import PageNotFound from "../PageNotFound/PageNotFound";
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -59,6 +60,7 @@ class App extends React.Component {
                 <Route path="/saved-movies" element={ <Movies isSavedMovies={true} route='saved-movies' /> } />
                 <Route path="/profile" element={<Profile />} />
 
+                <Route path="*" element={<PageNotFound />} />
               </Routes>
             </BrowserRouter>
           </div>
