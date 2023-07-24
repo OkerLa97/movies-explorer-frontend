@@ -1,6 +1,6 @@
 .techs {
   background-color: #272727;
-  padding: 100px 70px;
+  padding: 102px 70px;
   display: flex;
   flex-direction: column;
 }
@@ -52,7 +52,7 @@
 @media (max-width:1279px) {
 
   .techs {
-    padding: 70px 50px;
+    padding: 92px 50px;
   }
 
   .techs__description-title {
@@ -88,18 +88,19 @@
 
   .techs__description-title {
     font-size: 30px;
-    margin: 50px auto 10px auto;
+    margin: 50px auto 13px auto;
     letter-spacing: -1.2px;
   }
 
   .techs__description-text {
     font-size: 11px;
     letter-spacing: -0.44px;
+    line-height: 16px;
   }
 
   .techs__stack {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 48px auto 0 auto;
+    margin: 50px auto 0 auto;
   }
 }

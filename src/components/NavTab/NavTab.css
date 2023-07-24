@@ -1,5 +1,5 @@
 .navtab {
-  padding: 18px 70px;
+  padding: 16px 70px;
   display: flex;
   justify-content: space-between;
 }
@@ -54,14 +54,14 @@
 @media (max-width: 1279px){
 
   .navtab {
-    padding: 18px 30px;
+    padding: 16px 30px;
   }
 }
 
 @media (max-width: 767px) {
 
   .navtab {
-    padding:18px 14px;
+    padding:16px 14px;
   }
 
   .navtab__auth {

@@ -1,5 +1,6 @@
 .page {
-  display: flow-root;
+  display: flex;
+  flex-direction: column;
   background-color:#202020;
   min-width:320px;
   min-height:100vh;
