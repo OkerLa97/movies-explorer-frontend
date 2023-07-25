@@ -15,8 +15,10 @@ class Movies extends React.Component {
     return (
       <>
         <Header route={this.props.route}/>
-        <SearchForm />
-        <MoviesCardList films={initialFilms} isSavedMovies={this.props.isSavedMovies} />
+        <main>
+          <SearchForm />
+          <MoviesCardList films={initialFilms} isSavedMovies={this.props.isSavedMovies} />
+        </main>
         <Footer />
       </>
     );
