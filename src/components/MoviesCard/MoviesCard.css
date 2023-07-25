@@ -36,6 +36,12 @@
   border:0;
   background-color: transparent;
   padding:0;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.movie-card__like-button:hover {
+  opacity: 0.8;
 }
 
 .movie-card__image {

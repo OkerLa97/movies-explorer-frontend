@@ -83,6 +83,11 @@
   text-decoration: none;
   color: #FFFFFF;
   font-size: 14px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.header__account-link:hover {
+  opacity: 0.8;
 }
 
 .header__link-item:first-child {
