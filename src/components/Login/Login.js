@@ -67,10 +67,10 @@ class Login extends React.Component {
           <h1 className="login__title">Рады видеть!</h1>
 
           <label className="login__label">E-mail</label>
-          <input className={this.state.errorInputTag === "email" ? "login__field login__field-error" : "login__field"} type="email" minLength="2" maxLength="40" placeholder="..." required value={this.state.email} name="email" onChange={this.handleEmailChange} />
+          <input className={this.state.errorInputTag === "email" ? "login__field login__field-error" : "login__field"} type="email" minLength="2" maxLength="40" placeholder="E-Mail ..." required value={this.state.email} name="email" onChange={this.handleEmailChange} />
 
           <label className="login__label">Пароль</label>
-          <input className={this.state.errorInputTag === "password" ? "login__field login__field-error" : "login__field"} type="password" minLength="8" maxLength="200" placeholder="..."  required value={this.state.password} name="password" onChange={this.handlePasswordChange} />
+          <input className={this.state.errorInputTag === "password" ? "login__field login__field-error" : "login__field"} type="password" minLength="8" maxLength="200" placeholder="Пароль ..."  required value={this.state.password} name="password" onChange={this.handlePasswordChange} />
 
           <label className="login__error-label">{errorMessage}</label>
 

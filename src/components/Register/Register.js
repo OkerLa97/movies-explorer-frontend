@@ -75,13 +75,13 @@ class Register extends React.Component {
           <h1 className="register__title">Добро пожаловать!</h1>
 
           <label className="register__label">Имя</label>
-          <input className={this.state.errorInputTag === "name" ? "register__field register__field-error" : "register__field"} type="text" minLength="2" maxLength="40" placeholder="..." required value={this.state.name} name="name" onChange={this.handleNameChange} />
+          <input className={this.state.errorInputTag === "name" ? "register__field register__field-error" : "register__field"} type="text" minLength="2" maxLength="40" placeholder="Имя ..." required value={this.state.name} name="name" onChange={this.handleNameChange} />
 
           <label className="register__label">E-mail</label>
-          <input className={this.state.errorInputTag === "email" ? "register__field register__field-error" : "register__field"} type="email" minLength="2" maxLength="40" placeholder="..." required value={this.state.email} name="email" onChange={this.handleEmailChange} />
+          <input className={this.state.errorInputTag === "email" ? "register__field register__field-error" : "register__field"} type="email" minLength="2" maxLength="40" placeholder="E-Mail ..." required value={this.state.email} name="email" onChange={this.handleEmailChange} />
 
           <label className="register__label">Пароль</label>
-          <input className={this.state.errorInputTag === "password" ? "register__field register__field-error" : "register__field"} type="password" minLength="8" maxLength="200" placeholder="..."  required value={this.state.password} name="password" onChange={this.handlePasswordChange} />
+          <input className={this.state.errorInputTag === "password" ? "register__field register__field-error" : "register__field"} type="password" minLength="8" maxLength="200" placeholder="Пароль ..."  required value={this.state.password} name="password" onChange={this.handlePasswordChange} />
 
           <label className="register__error-label">{errorMessage}</label>
 

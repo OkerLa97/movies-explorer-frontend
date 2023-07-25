@@ -16,11 +16,11 @@ class Profile extends React.Component {
           <form className="profile__form" name="profile" noValidate>
             <div className="profile__form-item">
               <label className="profile__form-label" htmlFor="name">Имя</label>
-              <input className="profile__form-input" id="name" name="name" value={this.context.userName} type="text" minLength="2" maxLength="40" required disabled={true} />
+              <input className="profile__form-input" id="name" name="name" value={this.context.userName} type="text" minLength="2" maxLength="40" placeholder="Имя ..." required disabled={true} />
             </div>
             <div className="profile__form-item">
               <label className="profile__form-label" htmlFor="email">E-mail</label>
-              <input className="profile__form-input" id="email" name="email" type="email" value={this.context.email} minLength="2" maxLength="40" required disabled={true} />
+              <input className="profile__form-input" id="email" name="email" type="email" value={this.context.email} minLength="2" maxLength="40" placeholder="E-Mail ..." required disabled={true} />
             </div>
           </form>
           <div className="profile__footer">
