@@ -1,8 +1,9 @@
 .profile {
-  max-width: 410px;
-  margin: 74px auto 0 auto;
+  min-width: 410px;
+  margin: auto;
   display: flex;
   flex-direction: column;
+  padding: 20px 0;
 }
 
 .profile__form {
@@ -86,8 +87,9 @@
 }
 
 @media (max-width: 1279px){
+
   .profile {
-    margin: 230px auto 0 auto;
+    transform: translateY(-18px);
   }
 
   .profile__form {
@@ -101,8 +103,9 @@
 
 @media (max-width: 767px){
   .profile {
-    max-width: 260px;
+    min-width: 260px;
     margin: 70px auto 0 auto;
+    transform: translateY(-20px);
   }
 
   .profile__form {

@@ -1,5 +1,5 @@
 .header {
-  padding: 18px 70px;
+  padding: 17px 70px;
   display: flex;
   justify-content: space-between;
 }
@@ -103,6 +103,15 @@
 
 @media (max-width: 768px){
 
+  .header__account {
+    position: fixed;
+    bottom: 90px;
+  }
+
+  .header__link-active::after {
+    margin-top: 4px;
+  }
+
   .header {
    padding: 18px 30px;
   }
@@ -138,8 +147,8 @@
     left: 100%;
     top: 0;
     width: 100vw;
-    height: 120%;
-    position: absolute;
+    height: 100vh;
+    position: fixed;
     gap:0;
     transition: all 0.5s ease-in-out;
   }
@@ -170,10 +179,6 @@
     opacity: 0.3;
   }
 
-  .header__account {
-    margin-top: 587px;
-  }
-
   .header__account-link {
     font-size: 14px;
     font-weight: 500;
@@ -182,6 +187,10 @@
 }
 
 @media (max-width: 520px){
+
+  .header__account {
+    bottom: 47px;
+  }
 
   .header__nav-mobile-cover {
     display: none;

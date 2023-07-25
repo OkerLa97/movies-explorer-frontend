@@ -6,8 +6,10 @@ class PageNotFound extends React.Component {
   render(){
     return (
       <section className="page-not-found">
-        <h1 className="page-not-found__title">404</h1>
-        <p className="page-not-found__subtitle">Страница не найдена</p>
+        <div className="page-not-fount__container">
+          <h1 className="page-not-found__title">404</h1>
+          <p className="page-not-found__subtitle">Страница не найдена</p>
+        </div>
         <Link className="page-not-found__link" to="/">Назад</Link>
       </section>
     )
