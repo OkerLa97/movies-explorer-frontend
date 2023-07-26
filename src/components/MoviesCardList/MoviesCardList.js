@@ -30,7 +30,10 @@ class MoviesCardList extends React.Component {
     this.maxCardsCnt = window.innerWidth >= 768 ? DESKTOP_MAX_CARDS_CNT : MOBILE_MAX_CARDS_CNT;
 
     // ОПРЕДЕЛЯЕМ КОЛИЧЕСТВО КАРТОЧЕК ДЛЯ ОТОБРАЖЕНИЯ
-    const showedFilms = this.props.films.slice(0, this.state.currentIdx + this.maxCardsCnt);
+    let endIdx = this.state.currentIdx + this.maxCardsCnt
+    if(endIdx > this.props.films.length) endIdx = this.props.films.length;
+
+    const showedFilms = this.props.films.slice(0, endIdx);
 
     console.log(showedFilms);
 
@@ -47,7 +50,7 @@ class MoviesCardList extends React.Component {
 
           } else return <MoviesCard key={index} film={film} isSavedMovies={this.props.isSavedMovies}/>
         })}
-        <button className="movie-card-list__more-button" onClick={this.handleMoreClick}>Ещё</button>
+        {endIdx !== this.props.films.length && <button className="movie-card-list__more-button" onClick={this.handleMoreClick}>Ещё</button>}
       </section>
     )
   }
