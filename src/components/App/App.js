@@ -7,6 +7,8 @@ import Register from '../Register/Register';
 import Login from "../Login/Login";
 import Movies from "../Movies/Movies";
 import Profile from "../Profile/Profile";
+
+import Toast from "../Toast/Toast";
 import PageNotFound from "../PageNotFound/PageNotFound";
 
 import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
@@ -23,6 +25,8 @@ class App extends React.Component {
     this.state = {
       isLoggedIn: false,
       authErrorMessage: "",
+      toastOpened: false,
+      toastText: "",
       currentUser: {
         userName: "",
         email: "",
@@ -61,11 +65,12 @@ class App extends React.Component {
     Promise.all([MainApi.getUserInfo()])
     .then(([userDataResponse]) => {
       const userData = userDataResponse.data;
+      console.log(userData);
       this.setState({
         currentUser: {
           userName: userData.name,
           _id: userData._id,
-          email: this.state.email,
+          email: userData.email,
         },
       });
     })
@@ -118,12 +123,16 @@ class App extends React.Component {
                     element={Profile}
                     loggedIn={this.state.isLoggedIn}
                     onLogout={this.handleLogout}
+                    onUpdateUser={this.handleUpdateUser}
                   />
                 }/>
 
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
             </BrowserRouter>
+
+            <Toast text={this.state.toastText} opened={this.state.toastOpened} />
+
           </div>
         </div>
       </CurrentUserContext.Provider>
@@ -172,6 +181,32 @@ class App extends React.Component {
     this.setState({
       authErrorMessage: "Что-то пошло не так! Попробуйте ещё раз.",
       isLoggedIn: false,
+    })
+  }
+
+  handleUpdateUser = (data) => {
+    MainApi.editProfile(data)
+    .then(userInfoResponse => {
+      this.setState({
+        currentUser: {
+          userName: userInfoResponse.data.name,
+          email: userInfoResponse.data.email,
+        },
+        toastOpened: true,
+        toastText: "Данные успешно обновлены!",
+      });
+
+      // ЗАКРЫВАЕМ ТОАСТ ЧЕРЕЗ 3 СЕКУНДЫ
+      setTimeout(() => {
+        this.setState({
+          toastOpened: false,
+          toastText: "",
+        });
+      }, 3000);
+
+    })
+    .catch(err => {
+      console.log(err);
     })
   }
 

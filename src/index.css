@@ -1,6 +1,7 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/inter/inter.css);
 
+@import url(./components/Toast/Toast.css);
 @import url(./components/PageNotFound/PageNotFound.css);
 @import url(./components/SectionHeader/SectionHeader.css);
 
