@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
-import { MainApi } from '../../utils/MainApi';
+import {MainApi} from '../../utils/MainApi';
 
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -22,18 +22,56 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoggedIn: false,
-      isRegistrationSuccess: false,
       authErrorMessage: "",
       currentUser: {
-        userName: "Виталий",
-        email: "pochta@yandex.ru",
+        userName: "",
+        email: "",
       }
     };
   }
 
   // МОНТИРОВАНИЕ
   componentDidMount() {
-    console.log('App: componentDidMount');
+
+    // ИМЕЕТСЯ ТОКЕН И НЕ АВТОРИЗОВАН
+    const jwt = localStorage.getItem("jwt");
+    if(jwt && !this.state.isLoggedIn){
+
+      // ПРОХОДИМ АВТОРИЗАЦИЮ ЧЕРЕЗ ТОКЕН И ЗАПРАШИВАЕМ ДАННЫЕ ПОСЛЕ АВТОРИЗАЦИИ
+      MainApi.checkAuth({jwt})
+      .then( loginData => {
+        this.setState({
+          isLoggedIn: true,
+        });
+        this.startApp();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    }
+
+    // ЗАПРАШИВАЕМ ДАННЫЕ ЕСЛИ УЖЕ АВТОРИЗОВАН
+    if(this.state.isLoggedIn){
+      this.startApp();
+    }
+  }
+
+  startApp(){
+    Promise.all([MainApi.getUserInfo()])
+    .then(([userDataResponse]) => {
+      const userData = userDataResponse.data;
+      this.setState({
+        currentUser: {
+          userName: userData.name,
+          _id: userData._id,
+          email: this.state.email,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   // ОБНОВЛЕНИЕ
@@ -44,8 +82,7 @@ class App extends React.Component {
 
   // РЕНДЕРИНГ
   render() {
-    console.log('App: render');
-    console.log('App: this.context', this.context);
+
     return (
       <CurrentUserContext.Provider value={this.state.currentUser}>
         <div className="App">
@@ -56,13 +93,14 @@ class App extends React.Component {
                 <Route path="/" element={<Main />} />
 
                 <Route path="/signin" element={ this.state.isLoggedIn ? <Navigate to="/movies"/> : <Login authErrorMessage={this.state.authErrorMessage} onLogin={this.handleLoginUser}/>} />
-                <Route path="/signup" element={ this.state.isRegistrationSuccess ? <Navigate to="/signin" /> : <Register authErrorMessage={this.state.authErrorMessage} onRegister={this.handleRegisterUser} />} />
+                <Route path="/signup" element={ this.state.isLoggedIn ? <Navigate to="/movies" /> : <Register authErrorMessage={this.state.authErrorMessage} onRegister={this.handleRegisterUser} />} />
 
                 <Route path="/movies" element={
                   <ProtectedRouteElement
                     element={Movies}
                     isSavedMovies={false}
                     route='movies'
+                    loggedIn={this.state.isLoggedIn}
                   />
                 }/>
 
@@ -71,12 +109,14 @@ class App extends React.Component {
                     element={Movies}
                     isSavedMovies={true}
                     route='saved-movies'
+                    loggedIn={this.state.isLoggedIn}
                   />
                 }/>
 
                 <Route path="/profile" element={
                   <ProtectedRouteElement
                     element={Profile}
+                    loggedIn={this.state.isLoggedIn}
                   />
                 }/>
 
@@ -93,16 +133,12 @@ class App extends React.Component {
 
     MainApi.registerUser(data)
     .then(userInfoResponse => {
-      this.setState({
-        authErrorMessage: "",
-        isRegistrationSuccess: true,
-      })
+      this.handleLoginUser(data);
     })
     .catch(err => {
       console.log(err);
       this.setState({
         authErrorMessage: "Что-то пошло не так! Попробуйте ещё раз.",
-        isRegistrationSuccess: false,
       })
     })
   }
@@ -116,6 +152,7 @@ class App extends React.Component {
         const jwt = loginInfo.token;
         localStorage.setItem("jwt", jwt);
         this.setState({
+          authErrorMessage: "",
           currentUser: {
             email:data.email,
             userName: "Виталий",
