@@ -6,24 +6,41 @@ class Profile extends React.Component {
 
   static contextType = CurrentUserContext;
 
+  loadingStarted = false;
+
   constructor(props) {
     super(props);
     this.state = {
       userName: "",
       email: "",
       editMode: false,
+      loading: false,
     };
 
     this.dataReceived = false;
   }
 
   componentDidMount() {
+
     if((this.context.userName !== this.state.userName || this.context.email !== this.state.email) && !this.dataReceived){
       this.dataReceived = true;
-      console.log(this.context);
       this.setState({
         userName: this.context.userName,
         email: this.context.email,
+      });
+    }
+  }
+
+  componentDidUpdate() {
+
+    if(this.loadingStarted) {
+      this.loadingStarted = false;
+      return;
+    }
+
+    if(this.state.loading){
+      this.setState({
+        loading: false,
       });
     }
   }
@@ -74,12 +91,19 @@ class Profile extends React.Component {
       email: this.state.email,
     });
 
+    this.loadingStarted = true;
+
     this.setState({
       editMode: false,
+      loading: true,
     });
   }
 
   render() {
+
+    let submitText = "Редактировать";
+    if(this.state.editMode) submitText = "Сохранить";
+    if(this.state.loading) submitText = "Сохранение...";
 
     return (
       <>
@@ -96,7 +120,7 @@ class Profile extends React.Component {
               <input className="profile__form-input" id="email" name="email" type="email" value={this.state.email} onChange={this.handleEmailChange} minLength="2" maxLength="40" placeholder="E-Mail ..." required disabled={!this.state.editMode} />
             </div>
             <div className="profile__footer">
-              <button className="profile__edit-form-button" type="submit" > {this.state.editMode ? "Сохранить" : "Редактировать"} </button>
+              <button className="profile__edit-form-button" type="submit" > {submitText} </button>
               <button className="profile__logout-button" type="button" onClick={this.handleLogoutClick}>Выйти из аккаунта</button>
             </div>
           </form>
