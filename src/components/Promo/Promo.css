@@ -1,0 +1,55 @@
+.promo {
+  display: flex;
+  flex-direction: column;
+  background-color: #073042;
+}
+
+.promo__title {
+  color: #FFF;
+  font-size: 40px;
+  font-family: Inter;
+  line-height: 52px;
+  letter-spacing: -1.6px;
+  max-width:626px;
+  margin: 51px auto 0 70px;
+  font-weight:400;
+}
+
+.promo__project-logo {
+  max-width: 722px;
+  max-height:244px;
+  opacity: 0.7;
+  margin: 101px 70px 60px auto;
+}
+
+@media (max-width: 1279px) {
+
+  .promo__title {
+    width: calc(100% - 44px * 2);
+    text-align: center;
+    margin: 302px auto 0 auto;
+  }
+
+  .promo__project-logo {
+    width: calc(100% - 44px * 2);
+    margin: 140px auto 70px auto;
+  }
+}
+
+@media (max-width: 767px){
+
+  .promo__title {
+    width: calc(100% - 10px * 2);
+    font-size: 31px;
+    margin: 183px auto 0 auto;
+    line-height: 39px;
+    letter-spacing: -1.24px;
+  }
+
+  .promo__project-logo {
+    width: 100%;
+    height: 230px;
+    margin: 60px auto 40px auto;
+    object-fit: cover;
+  }
+}
