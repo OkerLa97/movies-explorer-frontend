@@ -117,6 +117,7 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Profile}
                     loggedIn={this.state.isLoggedIn}
+                    onLogout={this.handleLogout}
                   />
                 }/>
 
@@ -172,6 +173,17 @@ class App extends React.Component {
       authErrorMessage: "Что-то пошло не так! Попробуйте ещё раз.",
       isLoggedIn: false,
     })
+  }
+
+  handleLogout = () => {
+    localStorage.removeItem("jwt");
+    this.setState({
+      isLoggedIn: false,
+      currentUser: {
+        userName: "",
+        email: "",
+      }
+    });
   }
 }
 

@@ -6,8 +6,12 @@ class Profile extends React.Component {
 
   static contextType = CurrentUserContext;
 
+  handleLogoutClick = () => {
+    this.props.onLogout();
+  }
+
   render() {
-    console.log(this.context);
+
     return (
       <>
         <Header route={this.props.route}/>
@@ -25,7 +29,7 @@ class Profile extends React.Component {
           </form>
           <div className="profile__footer">
             <button className="profile__edit-form-button" type="button">Редактировать</button>
-            <button className="profile__logout-button" type="button">Выйти из аккаунта</button>
+            <button className="profile__logout-button" type="button" onClick={this.handleLogoutClick}>Выйти из аккаунта</button>
           </div>
         </section>
       </>
