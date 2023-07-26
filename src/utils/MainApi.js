@@ -134,7 +134,7 @@ class Api {
   }
 }
 
-export const api = new Api({
+export const MainApi = new Api({
   baseUrl: 'https://api.oker97.nomoredomains.rocks',
   authUrl: 'https://api.oker97.nomoredomains.rocks',
   headers: {

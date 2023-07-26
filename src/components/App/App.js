@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
-import { api } from '../../utils/Api';
+import { MainApi } from '../../utils/MainApi';
 
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -91,7 +91,7 @@ class App extends React.Component {
 
   handleRegisterUser = (data) => {
 
-    api.registerUser(data)
+    MainApi.registerUser(data)
     .then(userInfoResponse => {
       this.setState({
         authErrorMessage: "",
@@ -108,7 +108,7 @@ class App extends React.Component {
   }
 
   handleLoginUser = (data) => {
-    api.loginUser(data)
+    MainApi.loginUser(data)
     .then(loginInfo => {
       // СОХРАНЯЕМ ТОКЕН И ЗАПРАШИВАЕМ ДАННЫЕ С СЕРВЕРА ЧЕРЕЗ startApp()
       console.log(loginInfo);
