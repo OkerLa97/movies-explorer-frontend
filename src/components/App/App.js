@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import {MainApi} from '../../utils/MainApi';
+import {MoviesApi} from '../../utils/MoviesApi';
 
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -23,14 +24,21 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
       isLoggedIn: false,
       authErrorMessage: "",
+
       toastOpened: false,
       toastText: "",
+
       currentUser: {
         userName: "",
         email: "",
-      }
+      },
+
+      movies: [],
+      moviesLoaded: false,
+      moviesLoadingError: false,
     };
   }
 
@@ -62,20 +70,27 @@ class App extends React.Component {
   }
 
   startApp(){
-    Promise.all([MainApi.getUserInfo()])
-    .then(([userDataResponse]) => {
+    Promise.all([MainApi.getUserInfo(), MoviesApi.getMovies()])
+    .then(([userDataResponse, moviesDataResponse]) => {
       const userData = userDataResponse.data;
-      console.log(userData);
+      const moviesData = moviesDataResponse;
       this.setState({
         currentUser: {
           userName: userData.name,
           _id: userData._id,
           email: userData.email,
         },
+        movies: moviesData,
+        moviesLoaded: true,
+        moviesLoadingError: false,
       });
     })
     .catch((err) => {
       console.log(err);
+      this.setState({
+        moviesLoaded: true,
+        moviesLoadingError: true,
+      });
     });
   }
 
@@ -104,8 +119,11 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Movies}
                     isSavedMovies={false}
+                    movies={this.state.movies}
                     route='movies'
                     loggedIn={this.state.isLoggedIn}
+                    moviesLoaded={this.state.moviesLoaded}
+                    moviesLoadingError={this.state.moviesLoadingError}
                   />
                 }/>
 

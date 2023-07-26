@@ -147,10 +147,16 @@ input:checked + .search-form__slider:before {
   transform: translateX(16px);
 }
 
+@media (max-width: 1279px) {
+  .search-form {
+    padding: 0 30px;
+  }
+}
+
 @media (max-width: 768px){
   .search-form {
     margin: 55px 0 0 0;
-    padding: 0 30px;
+    padding: 0 10px;
   }
 
   .search-form__form {
