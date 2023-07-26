@@ -9,6 +9,8 @@ import Movies from "../Movies/Movies";
 import Profile from "../Profile/Profile";
 import PageNotFound from "../PageNotFound/PageNotFound";
 
+import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
+
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 class App extends React.Component {
@@ -56,9 +58,27 @@ class App extends React.Component {
                 <Route path="/signin" element={ this.state.isLoggedIn ? <Navigate to="/movies"/> : <Login authErrorMessage={this.state.authErrorMessage} onLogin={this.handleLoginUser}/>} />
                 <Route path="/signup" element={ this.state.isRegistrationSuccess ? <Navigate to="/signin" /> : <Register authErrorMessage={this.state.authErrorMessage} onRegister={this.handleRegisterUser} />} />
 
-                <Route path="/movies" element={ <Movies isSavedMovies={false} route='movies'/> } />
-                <Route path="/saved-movies" element={ <Movies isSavedMovies={true} route='saved-movies' /> } />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/movies" element={
+                  <ProtectedRouteElement
+                    element={Movies}
+                    isSavedMovies={false}
+                    route='movies'
+                  />
+                }/>
+
+                <Route path="/saved-movies" element={
+                  <ProtectedRouteElement
+                    element={Movies}
+                    isSavedMovies={true}
+                    route='saved-movies'
+                  />
+                }/>
+
+                <Route path="/profile" element={
+                  <ProtectedRouteElement
+                    element={Profile}
+                  />
+                }/>
 
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
