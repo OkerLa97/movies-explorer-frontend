@@ -85,6 +85,11 @@
   cursor: pointer;
 }
 
+.login__submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .login__submit-btn:hover {
   opacity: 0.8;
 }

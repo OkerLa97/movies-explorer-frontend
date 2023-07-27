@@ -12,6 +12,7 @@ class Login extends React.Component {
       errorMessage: "",
       errorInputTag: "",
       submitText: "Войти",
+      valid: false,
     }
   }
 
@@ -31,9 +32,11 @@ class Login extends React.Component {
     if (!element.validity.valid) {
       newState.errorMessage = element.validationMessage;
       newState.errorInputTag = tag;
+      newState.valid = false;
     } else {
       newState.errorMessage = "";
       newState.errorInputTag = "";
+      newState.valid = true;
     }
 
     this.setState(newState);
@@ -74,7 +77,7 @@ class Login extends React.Component {
 
           <label className="login__error-label">{errorMessage}</label>
 
-          <button className="login__submit-btn" type="submit">{this.state.submitText}</button>
+          <button className="login__submit-btn" disabled={!this.state.valid} type="submit">{this.state.submitText}</button>
           <div className="login__login">
             <label className="login__login-is-login-label">Ещё не зарегистрированы?</label>
             <Link className="login__link" to="/signup" replace >Регистрация</Link>

@@ -13,6 +13,7 @@ class Register extends React.Component {
       errorMessage: "",
       errorInputTag: "",
       submitText: "Зарегистрироваться",
+      valid: false,
     }
   }
 
@@ -37,9 +38,11 @@ class Register extends React.Component {
     if (!element.validity.valid) {
       newState.errorMessage = element.validationMessage;
       newState.errorInputTag = tag;
+      newState.valid = false;
     } else {
       newState.errorMessage = "";
       newState.errorInputTag = "";
+      newState.valid = true;
     }
 
     this.setState(newState);
@@ -85,7 +88,7 @@ class Register extends React.Component {
 
           <label className="register__error-label">{errorMessage}</label>
 
-          <button className="register__submit-btn" type="submit">{this.state.submitText}</button>
+          <button className="register__submit-btn" disabled={!this.state.valid} type="submit">{this.state.submitText}</button>
           <div className="register__login">
             <label className="register__login-is-register-label">Уже зарегистрированы?</label>
             <Link className="register__link" to="/signin" replace >Войти</Link>
