@@ -5,8 +5,6 @@ import SearchForm from "../SearchForm/SearchForm";
 import Footer from "../Footer/Footer";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-import {initialFilms} from "../../utils/constants";
-
 class Movies extends React.Component {
 
   static contextType = CurrentUserContext;
@@ -16,8 +14,8 @@ class Movies extends React.Component {
       <>
         <Header route={this.props.route}/>
         <main>
-          <SearchForm />
-          <MoviesCardList films={this.props.movies} moviesLoaded={this.props.moviesLoaded} moviesLoadingError={this.props.moviesLoadingError} isSavedMovies={this.props.isSavedMovies} />
+          <SearchForm onSearchSubmit={this.props.onSearchSubmit} />
+          <MoviesCardList films={this.props.movies} moviesLoaded={this.props.moviesLoaded} moviesLoadingError={this.props.moviesLoadingError} onLikeClick={this.props.onLikeClick} isSavedMovies={this.props.isSavedMovies} />
         </main>
         <Footer />
       </>

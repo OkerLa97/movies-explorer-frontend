@@ -37,6 +37,10 @@ class App extends React.Component {
       },
 
       movies: [],
+      filteredMovies: [],
+
+      savedMovies: [],
+
       moviesLoaded: false,
       moviesLoadingError: false,
     };
@@ -70,17 +74,36 @@ class App extends React.Component {
   }
 
   startApp(){
-    Promise.all([MainApi.getUserInfo(), MoviesApi.getMovies()])
-    .then(([userDataResponse, moviesDataResponse]) => {
+    Promise.all([MainApi.getUserInfo(), MoviesApi.getMovies(), MainApi.getSavedMovies()])
+    .then(([userDataResponse, moviesDataResponse, savedMoviesDataResponse]) => {
+
       const userData = userDataResponse.data;
       const moviesData = moviesDataResponse;
+      const savedMoviesData = savedMoviesDataResponse.data;
+
+      moviesData.forEach((movie) => {
+        savedMoviesData.forEach((savedMovie) => {
+          if(movie.id === savedMovie.movieId){
+            movie.liked = true;
+            movie._id = savedMovie._id; // ДЛЯ УДОБСТВА
+          }
+        })
+      });
+
+      console.log(moviesData, savedMoviesData);
+
       this.setState({
         currentUser: {
           userName: userData.name,
           _id: userData._id,
           email: userData.email,
         },
+
         movies: moviesData,
+        filteredMovies: moviesData,
+
+        savedMovies: savedMoviesData,
+
         moviesLoaded: true,
         moviesLoadingError: false,
       });
@@ -96,9 +119,8 @@ class App extends React.Component {
 
   // ОБНОВЛЕНИЕ
   componentDidUpdate() {
-    console.log('App: componentDidUpdate');
+    //
   }
-
 
   // РЕНДЕРИНГ
   render() {
@@ -119,11 +141,13 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Movies}
                     isSavedMovies={false}
-                    movies={this.state.movies}
+                    movies={this.state.filteredMovies}
                     route='movies'
                     loggedIn={this.state.isLoggedIn}
                     moviesLoaded={this.state.moviesLoaded}
                     moviesLoadingError={this.state.moviesLoadingError}
+                    onSearchSubmit={this.handleSearchSubmit}
+                    onLikeClick={this.handleLikeClick}
                   />
                 }/>
 
@@ -131,8 +155,13 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Movies}
                     isSavedMovies={true}
+                    movies={this.state.filteredMovies}
                     route='saved-movies'
                     loggedIn={this.state.isLoggedIn}
+                    moviesLoaded={this.state.moviesLoaded}
+                    moviesLoadingError={this.state.moviesLoadingError}
+                    onSearchSubmit={this.handleSearchSubmit}
+                    onLikeClick={this.handleLikeClick}
                   />
                 }/>
 
@@ -237,6 +266,110 @@ class App extends React.Component {
         email: "",
       }
     });
+  }
+
+  handleSearchSubmit = (searchQuery, isShortFilms) => {
+    console.log(searchQuery, isShortFilms);
+    console.log(this.state.movies);
+    const foundMovies = this.state.movies.filter((movie) => {
+
+      const searchBlock = [movie.nameRU, movie.nameEN].join(" ").toLowerCase();
+
+      if(isShortFilms) return searchBlock.includes(searchQuery.toLowerCase()) && movie.duration <= 40;
+      else return searchBlock.includes(searchQuery.toLowerCase());
+
+    });
+
+    console.log(foundMovies);
+
+    this.setState({
+      filteredMovies: foundMovies,
+    });
+  }
+
+  handleLikeClick = (film) => {
+
+    if(!film.liked){
+      MainApi.saveMovie(film)
+      .then((savedMovieData) => {
+        const savedMovie = savedMovieData.data;
+        film.liked = true;
+        film._id = savedMovie._id; // ДЛЯ УДОБСТВА
+        this.setState({
+          savedMovies: [...this.state.savedMovies, savedMovie],
+          toastOpened: true,
+          toastText: "Фильм успешно сохранён!",
+        });
+
+        // ЗАКРЫВАЕМ ТОАСТ ЧЕРЕЗ 3 СЕКУНДЫ
+        setTimeout(() => {
+          this.setState({
+            toastOpened: false,
+            toastText: "",
+          });
+        }, 3000);
+
+        console.log(savedMovie);
+      })
+      .catch((err) => {
+
+        this.setState({
+          toastOpened: true,
+          toastText: "Что-то пошло не так! Попробуйте ещё раз.",
+        });
+
+        // ЗАКРЫВАЕМ ТОАСТ ЧЕРЕЗ 3 СЕКУНДЫ
+        setTimeout(() => {
+          this.setState({
+            toastOpened: false,
+            toastText: "",
+          });
+        }, 3000);
+
+        console.log(err);
+      });
+
+    } else {
+      MainApi.deleteMovie(film._id)
+      .then((deletedMovie) => {
+        film.liked = false;
+        const savedMovies = this.state.savedMovies.filter((movie) => {
+          return movie._id !== film._id;
+        });
+
+        this.setState({
+          savedMovies: savedMovies,
+          toastOpened: true,
+          toastText: "Фильм успешно удалён!",
+        });
+
+        // ЗАКРЫВАЕМ ТОАСТ ЧЕРЕЗ 3 СЕКУНДЫ
+        setTimeout(() => {
+          this.setState({
+            toastOpened: false,
+            toastText: "",
+          });
+        }, 3000);
+
+      })
+      .catch((err) => {
+
+        this.setState({
+          toastOpened: true,
+          toastText: "Что-то пошло не так! Попробуйте ещё раз.",
+        });
+
+        // ЗАКРЫВАЕМ ТОАСТ ЧЕРЕЗ 3 СЕКУНДЫ
+        setTimeout(() => {
+          this.setState({
+            toastOpened: false,
+            toastText: "",
+          });
+        }, 3000);
+
+        console.log(err);
+      });
+    }
   }
 }
 

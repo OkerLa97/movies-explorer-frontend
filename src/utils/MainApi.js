@@ -13,13 +13,6 @@ class Api {
     });
   }
 
-  getInitialCards() {
-    return this._request(`${this._baseUrl}/cards`, {
-      method: 'GET',
-      headers: this._headers
-    });
-  }
-
   editProfile(profile) {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
@@ -31,50 +24,37 @@ class Api {
     });
   }
 
-  addCard(card) {
-    return this._request(`${this._baseUrl}/cards`, {
+  getSavedMovies() {
+    return this._request(`${this._baseUrl}/movies`, {
+      method: 'GET',
+      headers: this._headers
+    });
+  }
+
+  saveMovie(film) {
+    return this._request(`${this._baseUrl}/movies`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: card.name,
-        link: card.link
+        country: film.country,
+        director: film.director,
+        duration: film.duration,
+        year: film.year,
+        description: film.description,
+        image: `https://api.nomoreparties.co${film.image.url}`,
+        trailerLink: film.trailerLink,
+        thumbnail: `https://api.nomoreparties.co${film.image.formats.thumbnail.url}`,
+        movieId: film.id,
+        nameRU: film.nameRU,
+        nameEN: film.nameEN,
       })
     });
   }
 
-  deleteCard(cardId) {
-    return this._request(`${this._baseUrl}/cards/${cardId}`, {
+  deleteMovie(movieId) {
+    return this._request(`${this._baseUrl}/movies/${movieId}`, {
       method: 'DELETE',
       headers: this._headers
-    });
-  }
-
-  addLike(cardId) {
-    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: this._headers
-    });
-  }
-
-  deleteLike(cardId) {
-    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'DELETE',
-      headers: this._headers
-    });
-  }
-
-  changeLikeCardStatus(cardId, isLiked) {
-    if (isLiked) return this.addLike(cardId);
-    else return this.deleteLike(cardId);
-  }
-
-  editAvatar(link) {
-    return this._request(`${this._baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: link
-      })
     });
   }
 

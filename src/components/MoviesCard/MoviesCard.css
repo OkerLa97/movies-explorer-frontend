@@ -2,6 +2,11 @@
   display: flex;
   background-color: #2F2F2F;
   justify-content: space-between;
+  cursor: pointer;
+}
+
+.movie-card:hover {
+  background-color: #1A1A1A;
 }
 
 .movie-card__description {
