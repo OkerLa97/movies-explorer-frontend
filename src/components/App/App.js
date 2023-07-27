@@ -23,6 +23,16 @@ class App extends React.Component {
   // ИНИЦИАЛИЗАЦИЯ
   constructor(props) {
     super(props);
+
+    // ПРОВЕРЯЕМ ЛОКАЛЬНОЕ ХРАНИЛИЩЕ НА НАЛИЧИЕ ПОИСКА
+    let searchQuery = localStorage.getItem("searchQuery");
+    if(!searchQuery) searchQuery = "";
+
+    let isShortFilms = localStorage.getItem("isShortFilms");
+    if(!isShortFilms) isShortFilms = false;
+    else isShortFilms = isShortFilms === "true" ? true : false;
+
+    // СОСТОЯНИЕ
     this.state = {
 
       isLoggedIn: false,
@@ -43,6 +53,9 @@ class App extends React.Component {
 
       moviesLoaded: false,
       moviesLoadingError: false,
+
+      searchQuery: searchQuery,
+      isShortFilms: isShortFilms,
     };
   }
 
@@ -90,7 +103,7 @@ class App extends React.Component {
         })
       });
 
-      console.log(moviesData, savedMoviesData);
+      const filteredMovies = this.searchMovies(this.state.searchQuery, this.state.isShortFilms, moviesData);
 
       this.setState({
         currentUser: {
@@ -100,7 +113,7 @@ class App extends React.Component {
         },
 
         movies: moviesData,
-        filteredMovies: moviesData,
+        filteredMovies: filteredMovies,
 
         savedMovies: savedMoviesData,
 
@@ -146,6 +159,8 @@ class App extends React.Component {
                     loggedIn={this.state.isLoggedIn}
                     moviesLoaded={this.state.moviesLoaded}
                     moviesLoadingError={this.state.moviesLoadingError}
+                    searchQuery={this.state.searchQuery}
+                    isShortFilms={this.state.isShortFilms}
                     onSearchSubmit={this.handleSearchSubmit}
                     onLikeClick={this.handleLikeClick}
                   />
@@ -160,6 +175,8 @@ class App extends React.Component {
                     loggedIn={this.state.isLoggedIn}
                     moviesLoaded={this.state.moviesLoaded}
                     moviesLoadingError={this.state.moviesLoadingError}
+                    searchQuery={this.state.searchQuery}
+                    isShortFilms={this.state.isShortFilms}
                     onSearchSubmit={this.handleSearchSubmit}
                     onLikeClick={this.handleLikeClick}
                   />
@@ -268,10 +285,9 @@ class App extends React.Component {
     });
   }
 
-  handleSearchSubmit = (searchQuery, isShortFilms) => {
-    console.log(searchQuery, isShortFilms);
-    console.log(this.state.movies);
-    const foundMovies = this.state.movies.filter((movie) => {
+  searchMovies = (searchQuery, isShortFilms, listForSearch) => {
+
+    const foundMovies = listForSearch.filter((movie) => {
 
       const searchBlock = [movie.nameRU, movie.nameEN].join(" ").toLowerCase();
 
@@ -280,9 +296,21 @@ class App extends React.Component {
 
     });
 
-    console.log(foundMovies);
+    return foundMovies;
+  }
+
+  handleSearchSubmit = (searchQuery, isShortFilms) => {
+
+    // СОХРАНЯЕМ ПОИСК В ЛОКАЛЬНОЕ ХРАНИЛИЩЕ
+    localStorage.setItem("searchQuery", searchQuery);
+    localStorage.setItem("isShortFilms", isShortFilms);
+
+    // ПОИСК ФИЛЬМОВ
+    const foundMovies = this.searchMovies(searchQuery, isShortFilms, this.state.movies);
 
     this.setState({
+      searchQuery: searchQuery,
+      isShortFilms: isShortFilms,
       filteredMovies: foundMovies,
     });
   }

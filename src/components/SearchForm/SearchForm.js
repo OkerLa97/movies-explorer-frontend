@@ -5,8 +5,8 @@ class SearchForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      searchQuery: "",
-      isShortFilms: false,
+      searchQuery: props.searchQuery,
+      isShortFilms: props.isShortFilms,
     }
   }
 

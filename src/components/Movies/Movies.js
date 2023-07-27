@@ -14,7 +14,7 @@ class Movies extends React.Component {
       <>
         <Header route={this.props.route}/>
         <main>
-          <SearchForm onSearchSubmit={this.props.onSearchSubmit} />
+          <SearchForm onSearchSubmit={this.props.onSearchSubmit} searchQuery={this.props.searchQuery} isShortFilms={this.props.isShortFilms}/>
           <MoviesCardList films={this.props.movies} moviesLoaded={this.props.moviesLoaded} moviesLoadingError={this.props.moviesLoadingError} onLikeClick={this.props.onLikeClick} isSavedMovies={this.props.isSavedMovies} />
         </main>
         <Footer />
