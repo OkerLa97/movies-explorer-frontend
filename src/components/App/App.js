@@ -305,8 +305,32 @@ class App extends React.Component {
     localStorage.setItem("searchQuery", searchQuery);
     localStorage.setItem("isShortFilms", isShortFilms);
 
+    // ПРОВЕРЯЕМ НА ПУСТОЙ ПОИСК, ВЫВОДИМ ВСЕ ФИЛЬМЫ И ВЫВОДИМ СООБЩЕНИЕ
+    if(searchQuery === ""){
+
+      this.setState({
+        searchQuery: searchQuery,
+        isShortFilms: isShortFilms,
+        filteredMovies: this.state.movies,
+        toastOpened: true,
+        toastText: "Нужно ввести ключевое слово",
+      });
+
+      // ЗАКРЫВАЕМ ТОАСТ ЧЕРЕЗ 3 СЕКУНДЫ
+      setTimeout(() => {
+        this.setState({
+          toastOpened: false,
+          toastText: "",
+        });
+      }, 3000);
+
+      return;
+    }
+
     // ПОИСК ФИЛЬМОВ
     const foundMovies = this.searchMovies(searchQuery, isShortFilms, this.state.movies);
+
+
 
     this.setState({
       searchQuery: searchQuery,
