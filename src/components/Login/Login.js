@@ -16,6 +16,10 @@ class Login extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    console.log(this.state);
+  }
+
   handleEmailChange = event => {
     this.validateAndSet("email", event.target);
   }
@@ -73,6 +77,9 @@ class Login extends React.Component {
 
     const errorMessage = this.props.authErrorMessage !== "" ? this.props.authErrorMessage : this.state.errorMessage;
 
+    var submitText = this.state.submitText;
+    if(this.props.authErrorMessage !== "") submitText = "Войти";
+
     return (
       <section className="login">
         <Link className="login__logo-link" to="/" replace >
@@ -89,7 +96,7 @@ class Login extends React.Component {
 
           <label className="login__error-label">{errorMessage}</label>
 
-          <button className="login__submit-btn" disabled={!this.state.valid} type="submit">{this.state.submitText}</button>
+          <button className="login__submit-btn" disabled={!this.state.valid} type="submit">{submitText}</button>
           <div className="login__login">
             <label className="login__login-is-login-label">Ещё не зарегистрированы?</label>
             <Link className="login__link" to="/signup" replace >Регистрация</Link>

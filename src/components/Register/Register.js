@@ -80,6 +80,9 @@ class Register extends React.Component {
 
     const errorMessage = this.props.authErrorMessage !== "" ? this.props.authErrorMessage : this.state.errorMessage;
 
+    var submitText = this.state.submitText;
+    if(this.props.authErrorMessage !== "") submitText = "Зарегистрироваться";
+
     return (
       <section className="register">
 
@@ -100,7 +103,7 @@ class Register extends React.Component {
 
           <label className="register__error-label">{errorMessage}</label>
 
-          <button className="register__submit-btn" disabled={!this.state.valid} type="submit">{this.state.submitText}</button>
+          <button className="register__submit-btn" disabled={!this.state.valid} type="submit">{submitText}</button>
           <div className="register__login">
             <label className="register__login-is-register-label">Уже зарегистрированы?</label>
             <Link className="register__link" to="/signin" replace >Войти</Link>
