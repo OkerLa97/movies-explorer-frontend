@@ -233,6 +233,7 @@ class App extends React.Component {
           },
           isLoggedIn:true
         });
+        this.startApp();
       } else this.handleLoginError();
     })
     .catch(err => {
@@ -329,8 +330,6 @@ class App extends React.Component {
 
     // ПОИСК ФИЛЬМОВ
     const foundMovies = this.searchMovies(searchQuery, isShortFilms, this.state.movies);
-
-
 
     this.setState({
       searchQuery: searchQuery,
