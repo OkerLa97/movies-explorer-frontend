@@ -71,6 +71,11 @@
   opacity: 0.8;
 }
 
+.profile__edit-form-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .profile__logout-button {
   border:0;
   background-color: transparent;

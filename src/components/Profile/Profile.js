@@ -105,6 +105,8 @@ class Profile extends React.Component {
     if(this.state.editMode) submitText = "Сохранить";
     if(this.state.loading) submitText = "Сохранение...";
 
+    const valid = this.state.userName !== this.context.userName || this.state.email !== this.context.email;
+
     return (
       <>
         <Header route={this.props.route}/>
@@ -120,7 +122,7 @@ class Profile extends React.Component {
               <input className="profile__form-input" id="email" name="email" type="email" value={this.state.email} onChange={this.handleEmailChange} minLength="2" maxLength="40" placeholder="E-Mail ..." required disabled={!this.state.editMode} />
             </div>
             <div className="profile__footer">
-              <button className="profile__edit-form-button" type="submit" > {submitText} </button>
+              <button className="profile__edit-form-button" type="submit" disabled={this.state.editMode && !valid}> {submitText} </button>
               <button className="profile__logout-button" type="button" onClick={this.handleLogoutClick}>Выйти из аккаунта</button>
             </div>
           </form>
