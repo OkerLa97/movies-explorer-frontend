@@ -37,6 +37,7 @@ class App extends React.Component {
 
       isLoggedIn: false,
       authErrorMessage: "",
+      registerErrorMessage: "",
 
       toastOpened: false,
       toastText: "",
@@ -148,7 +149,7 @@ class App extends React.Component {
                 <Route path="/" element={<Main loggedIn={this.state.isLoggedIn} />} />
 
                 <Route path="/signin" element={ this.state.isLoggedIn ? <Navigate to="/movies"/> : <Login authErrorMessage={this.state.authErrorMessage} onLogin={this.handleLoginUser}/>} />
-                <Route path="/signup" element={ this.state.isLoggedIn ? <Navigate to="/movies" /> : <Register authErrorMessage={this.state.authErrorMessage} onRegister={this.handleRegisterUser} />} />
+                <Route path="/signup" element={ this.state.isLoggedIn ? <Navigate to="/movies" /> : <Register authErrorMessage={this.state.registerErrorMessage} onRegister={this.handleRegisterUser} />} />
 
                 <Route path="/movies" element={
                   <ProtectedRouteElement
@@ -212,7 +213,7 @@ class App extends React.Component {
     .catch(err => {
       console.log(err);
       this.setState({
-        authErrorMessage: "Что-то пошло не так! Попробуйте ещё раз.",
+        registerErrorMessage: "Что-то пошло не так! Попробуйте ещё раз.",
       })
     })
   }
