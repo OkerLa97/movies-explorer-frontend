@@ -35,15 +35,27 @@ class Register extends React.Component {
     var newState = {};
     newState[tag] = element.value;
 
+    if(tag === "email") {
+      // Проверка на валидность email
+      const regExp = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+      if (!regExp.test(element.value)) {
+        newState.errorMessage = "Некорректный email";
+        newState.errorInputTag = tag;
+        this.setState(newState);
+        return;
+      }
+    }
+
     if (!element.validity.valid) {
       newState.errorMessage = element.validationMessage;
       newState.errorInputTag = tag;
-      newState.valid = false;
     } else {
       newState.errorMessage = "";
       newState.errorInputTag = "";
-      newState.valid = true;
     }
+
+    if (this.state.name !== "" && this.state.email !== "" && this.state.password !== "" && newState.errorMessage === "") newState.valid = true;
+    else newState.valid = false;
 
     this.setState(newState);
   }
