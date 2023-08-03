@@ -15,7 +15,7 @@ class Main extends React.Component {
   render() {
     return (
       <>
-        <Promo />
+        <Promo loggedIn={this.props.loggedIn}/>
         <main>
           <AboutProject />
           <Techs />

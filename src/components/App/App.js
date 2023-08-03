@@ -145,7 +145,7 @@ class App extends React.Component {
             <BrowserRouter>
               <Routes>
 
-                <Route path="/" element={<Main />} />
+                <Route path="/" element={<Main loggedIn={this.state.isLoggedIn} />} />
 
                 <Route path="/signin" element={ this.state.isLoggedIn ? <Navigate to="/movies"/> : <Login authErrorMessage={this.state.authErrorMessage} onLogin={this.handleLoginUser}/>} />
                 <Route path="/signup" element={ this.state.isLoggedIn ? <Navigate to="/movies" /> : <Register authErrorMessage={this.state.authErrorMessage} onRegister={this.handleRegisterUser} />} />
