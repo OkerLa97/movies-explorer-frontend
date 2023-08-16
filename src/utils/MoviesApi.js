@@ -15,11 +15,6 @@ class Api {
 
   _request(url, options) {
 
-    // Проверяем, есть ли у запроса заголовок авторизации, и если есть — добавляем в него токен если имеется
-    if(options.headers && !options.headers.Authorization && localStorage.getItem("jwt")){
-      options.headers.Authorization = `Bearer ${localStorage.getItem("jwt")}`;
-    }
-
     return fetch(url, options)
     .then(this._checkResponse);
   }
