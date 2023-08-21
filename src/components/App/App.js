@@ -88,24 +88,19 @@ class App extends React.Component {
   }
 
   startApp(){
-    Promise.all([MainApi.getUserInfo(), MoviesApi.getMovies(), MainApi.getSavedMovies()])
-    .then(([userDataResponse, moviesDataResponse, savedMoviesDataResponse]) => {
+    Promise.all([MainApi.getUserInfo(), MainApi.getSavedMovies()])
+    .then(([userDataResponse, savedMoviesDataResponse]) => {
 
       const userData = userDataResponse.data;
-      const moviesData = moviesDataResponse;
       const savedMoviesData = savedMoviesDataResponse.data;
 
-      moviesData.forEach((movie) => {
-        savedMoviesData.forEach((savedMovie) => {
-          if(movie.id === savedMovie.movieId){
-            movie.liked = true;
-            savedMovie.liked = true;
-            movie._id = savedMovie._id; // ДЛЯ УДОБСТВА
-          }
-        })
-      });
+      // ПРОВЕРЯЕМ НА НАЛИЧИЕ ПОИСКА
+      let searchQuery = localStorage.getItem("searchQuery");
+      if(!searchQuery) searchQuery = "";
 
-      const filteredMovies = this.searchMovies(this.state.searchQuery, this.state.isShortFilms, moviesData);
+      let isShortFilms = localStorage.getItem("isShortFilms")
+      if(!isShortFilms) isShortFilms = false;
+      else isShortFilms = isShortFilms === "true" ? true : false;
 
       this.setState({
         currentUser: {
@@ -114,14 +109,19 @@ class App extends React.Component {
           email: userData.email,
         },
 
-        movies: moviesData,
-        filteredMovies: filteredMovies,
-
         savedMovies: savedMoviesData,
 
         moviesLoaded: true,
         moviesLoadingError: false,
+
+        searchQuery: searchQuery,
+        isShortFilms: isShortFilms,
       });
+
+      if(searchQuery !== ""){
+        this.handleSearchSubmit(searchQuery, isShortFilms);
+      }
+
     })
     .catch((err) => {
       console.log(err);
@@ -130,11 +130,6 @@ class App extends React.Component {
         moviesLoadingError: true,
       });
     });
-  }
-
-  // ОБНОВЛЕНИЕ
-  componentDidUpdate() {
-    //
   }
 
   // РЕНДЕРИНГ
@@ -310,12 +305,12 @@ class App extends React.Component {
     localStorage.setItem("isShortFilms", isShortFilms);
 
     // ПРОВЕРЯЕМ НА ПУСТОЙ ПОИСК, ВЫВОДИМ ВСЕ ФИЛЬМЫ И ВЫВОДИМ СООБЩЕНИЕ
-    if(searchQuery === "" && this.state.isShortFilms === isShortFilms){
+    if(searchQuery === ""){
 
       this.setState({
         searchQuery: searchQuery,
         isShortFilms: isShortFilms,
-        filteredMovies: this.state.movies,
+        //filteredMovies: this.state.movies,
         toastOpened: true,
         toastText: "Нужно ввести ключевое слово",
       });
@@ -331,13 +326,35 @@ class App extends React.Component {
       return;
     }
 
-    // ПОИСК ФИЛЬМОВ
-    const foundMovies = this.searchMovies(searchQuery, isShortFilms, this.state.movies);
-
     this.setState({
       searchQuery: searchQuery,
       isShortFilms: isShortFilms,
-      filteredMovies: foundMovies,
+      moviesLoaded: false,
+    });
+
+    MoviesApi.getMovies()
+    .then((moviesData) => {
+      moviesData.forEach((movie) => {
+        this.state.savedMovies.forEach((savedMovie) => {
+          if(movie.id === savedMovie.movieId){
+            movie.liked = true;
+            savedMovie.liked = true;
+            movie._id = savedMovie._id; // ДЛЯ УДОБСТВА
+          }
+        })
+      });
+
+      const filteredMovies = this.searchMovies(this.state.searchQuery, this.state.isShortFilms, moviesData);
+
+      this.setState({
+        movies: moviesData,
+        filteredMovies: filteredMovies,
+        moviesLoaded: true,
+      });
+
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 

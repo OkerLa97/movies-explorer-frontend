@@ -47,9 +47,9 @@ class MoviesCardList extends React.Component {
 
     return (
       <section className="movie-card-list">
-        {!this.props.moviesLoaded && <Preloader />}
+        {!this.props.moviesLoaded && this.props.searchQuery !== "" && <Preloader />}
         {this.props.moviesLoadingError && <p className="movie-card-list__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>}
-        {showedFilms.length === 0 && this.props.moviesLoaded && !this.props.moviesLoadingError && <p className="movie-card-list__error">Ничего не найдено</p>}
+        {showedFilms.length === 0 && this.props.moviesLoaded && this.props.searchQuery !== "" && !this.props.moviesLoadingError && <p className="movie-card-list__error">Ничего не найдено</p>}
         {showedFilms.map((film, index) => {
           return <MoviesCard key={index} film={film} isSavedMovies={this.props.isSavedMovies} onLikeClick={this.props.onLikeClick}/>
         })}
