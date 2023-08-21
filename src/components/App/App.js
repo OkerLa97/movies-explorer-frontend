@@ -32,9 +32,14 @@ class App extends React.Component {
     if(!isShortFilms) isShortFilms = false;
     else isShortFilms = isShortFilms === "true" ? true : false;
 
+    let hasJWT = false
+    if(localStorage.getItem("jwt")) hasJWT = true;
+
+
     // СОСТОЯНИЕ
     this.state = {
 
+      hasJWT: hasJWT,
       isLoggedIn: false,
       authErrorMessage: "",
       registerErrorMessage: "",
@@ -153,7 +158,7 @@ class App extends React.Component {
                     isSavedMovies={false}
                     movies={this.state.filteredMovies}
                     route='movies'
-                    loggedIn={this.state.isLoggedIn}
+                    loggedIn={this.state.hasJWT}
                     moviesLoaded={this.state.moviesLoaded}
                     moviesLoadingError={this.state.moviesLoadingError}
                     searchQuery={this.state.searchQuery}
@@ -169,7 +174,7 @@ class App extends React.Component {
                     isSavedMovies={true}
                     movies={this.state.savedMovies}
                     route='saved-movies'
-                    loggedIn={this.state.isLoggedIn}
+                    loggedIn={this.state.hasJWT}
                     moviesLoaded={this.state.moviesLoaded}
                     moviesLoadingError={this.state.moviesLoadingError}
                     searchQuery={this.state.searchQuery}
@@ -182,7 +187,7 @@ class App extends React.Component {
                 <Route path="/profile" element={
                   <ProtectedRouteElement
                     element={Profile}
-                    loggedIn={this.state.isLoggedIn}
+                    loggedIn={this.state.hasJWT}
                     onLogout={this.handleLogout}
                     onUpdateUser={this.handleUpdateUser}
                   />
@@ -227,7 +232,8 @@ class App extends React.Component {
             email:data.email,
             userName: "Виталий",
           },
-          isLoggedIn:true
+          isLoggedIn:true,
+          hasJWT: true,
         });
         this.startApp();
       } else this.handleLoginError();
@@ -242,6 +248,7 @@ class App extends React.Component {
     this.setState({
       authErrorMessage: "Что-то пошло не так! Попробуйте ещё раз.",
       isLoggedIn: false,
+      hasJWT: false,
     })
   }
 
@@ -277,6 +284,7 @@ class App extends React.Component {
     localStorage.removeItem("isShortFilms");
     this.setState({
       isLoggedIn: false,
+      hasJWT: false,
       currentUser: {
         userName: "",
         email: "",

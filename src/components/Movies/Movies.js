@@ -15,6 +15,7 @@ class Movies extends React.Component {
     let isShortFilms = this.props.isShortFilms;
     if(this.props.route === "movies"){
       searchQuery = localStorage.getItem("searchQuery");
+      if(!searchQuery) searchQuery = "";
       isShortFilms = localStorage.getItem("isShortFilms") === "true";
     }
 
