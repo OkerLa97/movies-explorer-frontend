@@ -16,10 +16,6 @@ class Login extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
   handleEmailChange = event => {
     this.validateAndSet("email", event.target);
   }
@@ -33,9 +29,15 @@ class Login extends React.Component {
     var newState = {};
     newState[tag] = element.value;
 
-    if(tag === "email") {
-      // Проверка на валидность email
-      const regExp = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+    const regExp = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+    if(this.state.email !== "" && tag !== "email") {
+      if (!regExp.test(this.state.email)) {
+        newState.errorMessage = "Некорректный email";
+        newState.errorInputTag = "email";
+        this.setState(newState);
+        return;
+      }
+    } else if(tag === "email") {
       if (!regExp.test(element.value)) {
         newState.errorMessage = "Некорректный email";
         newState.errorInputTag = tag;
@@ -90,11 +92,11 @@ class Login extends React.Component {
 
           <label className="login__label">E-mail</label>
           <input className={this.state.errorInputTag === "email" ? "login__field login__field-error" : "login__field"} type="email" minLength="2" maxLength="40" placeholder="E-Mail ..." required value={this.state.email} name="email" onChange={this.handleEmailChange} />
+          {this.state.errorInputTag === "email" ? <label className="login__error-label">{errorMessage}</label> : ""}
 
           <label className="login__label">Пароль</label>
           <input className={this.state.errorInputTag === "password" ? "login__field login__field-error" : "login__field"} type="password" minLength="8" maxLength="200" placeholder="Пароль ..."  required value={this.state.password} name="password" onChange={this.handlePasswordChange} />
-
-          <label className="login__error-label">{errorMessage}</label>
+          {this.state.errorInputTag === "password" ? <label className="login__error-label">{errorMessage}</label> : ""}
 
           <button className="login__submit-btn" disabled={!this.state.valid} type="submit">{submitText}</button>
           <div className="login__login">
