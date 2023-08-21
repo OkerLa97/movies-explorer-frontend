@@ -308,7 +308,7 @@ class App extends React.Component {
     localStorage.setItem("isShortFilms", isShortFilms);
 
     // ПРОВЕРЯЕМ НА ПУСТОЙ ПОИСК, ВЫВОДИМ ВСЕ ФИЛЬМЫ И ВЫВОДИМ СООБЩЕНИЕ
-    if(searchQuery === ""){
+    if(searchQuery === "" && this.state.isShortFilms === isShortFilms){
 
       this.setState({
         searchQuery: searchQuery,
