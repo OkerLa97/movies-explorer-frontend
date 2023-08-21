@@ -99,6 +99,7 @@ class App extends React.Component {
         savedMoviesData.forEach((savedMovie) => {
           if(movie.id === savedMovie.movieId){
             movie.liked = true;
+            savedMovie.liked = true;
             movie._id = savedMovie._id; // ДЛЯ УДОБСТВА
           }
         })
@@ -171,7 +172,7 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Movies}
                     isSavedMovies={true}
-                    movies={this.state.filteredMovies}
+                    movies={this.state.savedMovies}
                     route='saved-movies'
                     loggedIn={this.state.isLoggedIn}
                     moviesLoaded={this.state.moviesLoaded}
@@ -222,7 +223,6 @@ class App extends React.Component {
     MainApi.loginUser(data)
     .then(loginInfo => {
       // СОХРАНЯЕМ ТОКЕН И ЗАПРАШИВАЕМ ДАННЫЕ С СЕРВЕРА ЧЕРЕЗ startApp()
-      console.log(loginInfo);
       if(loginInfo.token){
         const jwt = loginInfo.token;
         localStorage.setItem("jwt", jwt);
@@ -347,6 +347,7 @@ class App extends React.Component {
       MainApi.saveMovie(film)
       .then((savedMovieData) => {
         const savedMovie = savedMovieData.data;
+        savedMovie.liked = true;
         film.liked = true;
         film._id = savedMovie._id; // ДЛЯ УДОБСТВА
         this.setState({
@@ -362,8 +363,6 @@ class App extends React.Component {
             toastText: "",
           });
         }, 3000);
-
-        console.log(savedMovie);
       })
       .catch((err) => {
 
@@ -386,7 +385,14 @@ class App extends React.Component {
     } else {
       MainApi.deleteMovie(film._id)
       .then((deletedMovie) => {
+
         film.liked = false;
+        //Найдем фильм в массиве и поменяем ему статус
+        const movie = this.state.movies.find((movie) => {
+          return movie.id === deletedMovie.data.movieId;
+        });
+        if(movie) movie.liked = false;
+
         const savedMovies = this.state.savedMovies.filter((movie) => {
           return movie._id !== film._id;
         });

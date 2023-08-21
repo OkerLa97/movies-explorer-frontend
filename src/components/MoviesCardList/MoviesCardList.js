@@ -38,7 +38,6 @@ class MoviesCardList extends React.Component {
     this.maxCardsCnt = window.innerWidth >= 768 ? DESKTOP_MAX_CARDS_CNT : MOBILE_MAX_CARDS_CNT;
 
     let dataPull = this.props.films;
-    if(this.props.isSavedMovies) dataPull = this.props.films.filter(film => film.liked);
 
     // ОПРЕДЕЛЯЕМ КОЛИЧЕСТВО КАРТОЧЕК ДЛЯ ОТОБРАЖЕНИЯ
     let endIdx = this.state.currentIdx + this.maxCardsCnt
@@ -52,13 +51,7 @@ class MoviesCardList extends React.Component {
         {this.props.moviesLoadingError && <p className="movie-card-list__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>}
         {showedFilms.length === 0 && this.props.moviesLoaded && !this.props.moviesLoadingError && <p className="movie-card-list__error">Ничего не найдено</p>}
         {showedFilms.map((film, index) => {
-          if(this.props.isSavedMovies){
-
-            if(film.liked) return <MoviesCard key={index} film={film} isSavedMovies={this.props.isSavedMovies} onLikeClick={this.props.onLikeClick}/>
-            else return false;
-
-          } else return <MoviesCard key={index} film={film} isSavedMovies={this.props.isSavedMovies} onLikeClick={this.props.onLikeClick}/>
-          //return <MoviesCard key={index} film={film} isSavedMovies={this.props.isSavedMovies} onLikeClick={this.props.onLikeClick}/>
+          return <MoviesCard key={index} film={film} isSavedMovies={this.props.isSavedMovies} onLikeClick={this.props.onLikeClick}/>
         })}
         {endIdx !== dataPull.length && <button className="movie-card-list__more-button" onClick={this.handleMoreClick}>Ещё</button>}
       </section>

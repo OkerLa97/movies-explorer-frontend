@@ -25,7 +25,8 @@ class MoviesCard extends React.Component {
     const minutes = minutesTotal % 60;
     const duration = `${hours}ч ${minutes}м`;
 
-    const imageUrl = `${IMAGE_SERVER}${this.props.film.image.url}`;
+    let imageUrl = this.props.film.image;
+    if(this.props.film.image.url) imageUrl = `${IMAGE_SERVER}${this.props.film.image.url}`;
 
     let icon = LikeActive;
     let likeTitle = "Сохранить фильм";
