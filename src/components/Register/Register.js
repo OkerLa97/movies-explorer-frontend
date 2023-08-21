@@ -35,9 +35,15 @@ class Register extends React.Component {
     var newState = {};
     newState[tag] = element.value;
 
-    if(tag === "email") {
-      // Проверка на валидность email
-      const regExp = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+    const regExp = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+    if(this.state.email !== "" && tag !== "email") {
+      if (!regExp.test(this.state.email)) {
+        newState.errorMessage = "Некорректный email";
+        newState.errorInputTag = "email";
+        this.setState(newState);
+        return;
+      }
+    } else if(tag === "email") {
       if (!regExp.test(element.value)) {
         newState.errorMessage = "Некорректный email";
         newState.errorInputTag = tag;
@@ -94,14 +100,15 @@ class Register extends React.Component {
 
           <label className="register__label">Имя</label>
           <input className={this.state.errorInputTag === "name" ? "register__field register__field-error" : "register__field"} type="text" minLength="2" maxLength="40" placeholder="Имя ..." required value={this.state.name} name="name" onChange={this.handleNameChange} />
+          {this.state.errorInputTag === "name" && <label className="register__error-label">{errorMessage}</label>}
 
           <label className="register__label">E-mail</label>
           <input className={this.state.errorInputTag === "email" ? "register__field register__field-error" : "register__field"} type="email" minLength="2" maxLength="40" placeholder="E-Mail ..." required value={this.state.email} name="email" onChange={this.handleEmailChange} />
+          {this.state.errorInputTag === "email" && <label className="register__error-label">{errorMessage}</label>}
 
           <label className="register__label">Пароль</label>
           <input className={this.state.errorInputTag === "password" ? "register__field register__field-error" : "register__field"} type="password" minLength="8" maxLength="200" placeholder="Пароль ..."  required value={this.state.password} name="password" onChange={this.handlePasswordChange} />
-
-          <label className="register__error-label">{errorMessage}</label>
+          {this.state.errorInputTag === "password" && <label className="register__error-label">{errorMessage}</label>}
 
           <button className="register__submit-btn" disabled={!this.state.valid} type="submit">{submitText}</button>
           <div className="register__login">
