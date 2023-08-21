@@ -278,6 +278,8 @@ class App extends React.Component {
 
   handleLogout = () => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("searchQuery");
+    localStorage.removeItem("isShortFilms");
     this.setState({
       isLoggedIn: false,
       currentUser: {
