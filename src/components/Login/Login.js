@@ -34,6 +34,7 @@ class Login extends React.Component {
       if (!regExp.test(this.state.email)) {
         newState.errorMessage = "Некорректный email";
         newState.errorInputTag = "email";
+        newState.valid = false;
         this.setState(newState);
         return;
       }
@@ -41,6 +42,7 @@ class Login extends React.Component {
       if (!regExp.test(element.value)) {
         newState.errorMessage = "Некорректный email";
         newState.errorInputTag = tag;
+        newState.valid = false;
         this.setState(newState);
         return;
       }
