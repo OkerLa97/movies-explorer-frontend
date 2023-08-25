@@ -306,11 +306,15 @@ class App extends React.Component {
     return foundMovies;
   }
 
-  handleSearchSubmit = (searchQuery, isShortFilms) => {
+  handleSearchSubmit = (searchQuery, isShortFilms, route) => {
+
+
 
     // СОХРАНЯЕМ ПОИСК В ЛОКАЛЬНОЕ ХРАНИЛИЩЕ
-    localStorage.setItem("searchQuery", searchQuery);
-    localStorage.setItem("isShortFilms", isShortFilms);
+    if(route === "movies"){
+      localStorage.setItem("searchQuery", searchQuery);
+      localStorage.setItem("isShortFilms", isShortFilms);
+    }
 
     // ПРОВЕРЯЕМ НА ПУСТОЙ ПОИСК, ВЫВОДИМ ВСЕ ФИЛЬМЫ И ВЫВОДИМ СООБЩЕНИЕ
     if(searchQuery === ""){
