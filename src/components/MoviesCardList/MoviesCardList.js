@@ -65,12 +65,6 @@ class MoviesCardList extends React.Component {
 
   render(){
 
-    // ОПРЕДЕЛЯЕМ КЛАСС ДЛЯ КОЛИЧЕСТВА КОЛОНОК
-
-
-    console.log(this.maxCardsCnt);
-    console.log(this.props.films);
-
     let dataPull = this.props.films;
 
     // ОПРЕДЕЛЯЕМ КОЛИЧЕСТВО КАРТОЧЕК ДЛЯ ОТОБРАЖЕНИЯ
@@ -82,7 +76,7 @@ class MoviesCardList extends React.Component {
     return (
       <section className="movie-card-list">
         {!this.props.moviesLoaded && this.props.searchQuery !== "" && <Preloader />}
-        <div class='movie-card-list-container'>
+        <div className='movie-card-list-container'>
           {this.props.moviesLoadingError && <p className="movie-card-list__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>}
           {showedFilms.length === 0 && this.props.moviesLoaded && this.props.searchQuery !== "" && !this.props.moviesLoadingError && <p className="movie-card-list__error">Ничего не найдено</p>}
           {showedFilms.map((film, index) => {
