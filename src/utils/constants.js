@@ -2,12 +2,12 @@ const IMAGE_SERVER = "https://api.nomoreparties.co";
 
 // ЛЕЙАУТ ДЛЯ ДЕСКТОПА
 const DESKTOP_RESOLUTION = 1280;
-const DESKTOP_CARDS_CNT = 12;
+const DESKTOP_CARDS_CNT = 4;
 const DESKTOP_LOAD_MORE_CARDS_CNT = 3;
 
 // ЛЕЙАУТ ДЛЯ ПЛАНШЕТА
 const TAB_RESOLUTION = 768;
-const TAB_CARDS_CNT = 8;
+const TAB_CARDS_CNT = 4;
 const TAB_LOAD_MORE_CARDS_CNT = 2;
 
 // ЛЕЙАУТ ДЛЯ МОБИЛЬНОГО
