@@ -65,6 +65,8 @@ class MoviesCardList extends React.Component {
 
   render(){
 
+    console.log(this.props.films);
+
     let dataPull = this.props.films;
 
     // ОПРЕДЕЛЯЕМ КОЛИЧЕСТВО КАРТОЧЕК ДЛЯ ОТОБРАЖЕНИЯ
@@ -73,16 +75,17 @@ class MoviesCardList extends React.Component {
 
     const showedFilms = dataPull.slice(0, endIdx);
 
+    console.log(this.props.searchQuery);
+    console.log(this.props.wasSearchRequest);
+
     return (
       <section className="movie-card-list">
-        {!this.props.moviesLoaded && this.props.searchQuery !== "" && <Preloader />}
-        <div className='movie-card-list-container'>
-          {this.props.moviesLoadingError && <p className="movie-card-list__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>}
-          {showedFilms.length === 0 && this.props.moviesLoaded && this.props.searchQuery !== "" && !this.props.moviesLoadingError && <p className="movie-card-list__error">Ничего не найдено</p>}
-          {showedFilms.map((film, index) => {
-            return <MoviesCard key={index} film={film} isSavedMovies={this.props.isSavedMovies} onLikeClick={this.props.onLikeClick}/>
-          })}
-        </div>
+        {!this.props.moviesLoaded && this.props.searchQuery !== "" && this.props.wasSearchRequest && <Preloader />}
+        {this.props.moviesLoadingError && <p className="movie-card-list__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>}
+        {showedFilms.length === 0 && this.props.moviesLoaded && this.props.searchQuery !== "" && !this.props.moviesLoadingError && <p className="movie-card-list__error">Ничего не найдено</p>}
+        {showedFilms.map((film, index) => {
+          return <MoviesCard key={index} film={film} isSavedMovies={this.props.isSavedMovies} onLikeClick={this.props.onLikeClick}/>
+        })}
         {endIdx !== dataPull.length && <button className="movie-card-list__more-button" onClick={this.handleMoreClick}>Ещё</button>}
       </section>
     )

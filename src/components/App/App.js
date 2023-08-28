@@ -53,15 +53,22 @@ class App extends React.Component {
       },
 
       movies: [],
-      filteredMovies: [],
+      searchedMovies: [],
+      savedSearchedMovies: [],
 
       savedMovies: [],
 
+      wasSearchRequest: false,
       moviesLoaded: false,
+      savedMoviesLoaded: false,
+
       moviesLoadingError: false,
 
       searchQuery: searchQuery,
       isShortFilms: isShortFilms,
+
+      savedMoviesSearchQuery: "",
+      savedMoviesIsShortFilms: false,
     };
   }
 
@@ -107,7 +114,7 @@ class App extends React.Component {
       if(!isShortFilms) isShortFilms = false;
       else isShortFilms = isShortFilms === "true" ? true : false;
 
-      this.setState({
+      const newState = {
         currentUser: {
           userName: userData.name,
           _id: userData._id,
@@ -115,23 +122,27 @@ class App extends React.Component {
         },
 
         savedMovies: savedMoviesData,
+        savedSearchedMovies: savedMoviesData,
 
-        moviesLoaded: true,
+        savedMoviesLoaded: true,
         moviesLoadingError: false,
 
         searchQuery: searchQuery,
         isShortFilms: isShortFilms,
-      });
+      };
 
       if(searchQuery !== ""){
-        this.handleSearchSubmit(searchQuery, isShortFilms);
+        newState.wasSearchRequest = true;
+        this.handleSearchSubmit(searchQuery, isShortFilms, "movies");
       }
+
+      this.setState(newState);
 
     })
     .catch((err) => {
       console.log(err);
       this.setState({
-        moviesLoaded: true,
+        savedMoviesLoaded: true,
         moviesLoadingError: true,
       });
     });
@@ -156,9 +167,10 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Movies}
                     isSavedMovies={false}
-                    movies={this.state.filteredMovies}
+                    movies={this.state.searchedMovies}
                     route='movies'
                     loggedIn={this.state.hasJWT}
+                    wasSearchRequest={this.state.wasSearchRequest}
                     moviesLoaded={this.state.moviesLoaded}
                     moviesLoadingError={this.state.moviesLoadingError}
                     searchQuery={this.state.searchQuery}
@@ -172,13 +184,13 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Movies}
                     isSavedMovies={true}
-                    movies={this.state.savedMovies}
+                    movies={this.state.savedSearchedMovies}
                     route='saved-movies'
                     loggedIn={this.state.hasJWT}
-                    moviesLoaded={this.state.moviesLoaded}
+                    moviesLoaded={this.state.savedMoviesLoaded}
                     moviesLoadingError={this.state.moviesLoadingError}
-                    searchQuery={this.state.searchQuery}
-                    isShortFilms={this.state.isShortFilms}
+                    searchQuery={this.state.savedMoviesSearchQuery}
+                    isShortFilms={this.state.savedMoviesIsShortFilms}
                     onSearchSubmit={this.handleSearchSubmit}
                     onLikeClick={this.handleLikeClick}
                   />
@@ -308,24 +320,39 @@ class App extends React.Component {
 
   handleSearchSubmit = (searchQuery, isShortFilms, route) => {
 
+    const newState = {};
 
-
-    // СОХРАНЯЕМ ПОИСК В ЛОКАЛЬНОЕ ХРАНИЛИЩЕ
+    // СОХРАНЯЕМ ПОИСК В ЛОКАЛЬНОЕ ХРАНИЛИЩЕ ПО РОУТУ movies
     if(route === "movies"){
       localStorage.setItem("searchQuery", searchQuery);
       localStorage.setItem("isShortFilms", isShortFilms);
+
+      newState.searchQuery = searchQuery;
+      newState.isShortFilms = isShortFilms;
+
+      console.log(this.state.wasSearchRequest);
+
+      // ДЛЯ ЛОАДЕРА
+      if(!this.state.wasSearchRequest){
+        this.setState({
+          wasSearchRequest: true,
+        });
+      }
+    }
+
+    // ПОИСК ПО РОУТУ saved-movies
+    else if(route === "saved-movies"){
+      newState.savedMoviesSearchQuery = searchQuery;
+      newState.savedMoviesIsShortFilms = isShortFilms;
     }
 
     // ПРОВЕРЯЕМ НА ПУСТОЙ ПОИСК, ВЫВОДИМ ВСЕ ФИЛЬМЫ И ВЫВОДИМ СООБЩЕНИЕ
     if(searchQuery === ""){
 
-      this.setState({
-        searchQuery: searchQuery,
-        isShortFilms: isShortFilms,
-        //filteredMovies: this.state.movies,
-        toastOpened: true,
-        toastText: "Нужно ввести ключевое слово",
-      });
+      newState.toastOpened = true;
+      newState.toastText = "Нужно ввести ключевое слово";
+
+      this.setState(newState);
 
       // ЗАКРЫВАЕМ ТОАСТ ЧЕРЕЗ 3 СЕКУНДЫ
       setTimeout(() => {
@@ -338,36 +365,68 @@ class App extends React.Component {
       return;
     }
 
-    this.setState({
-      searchQuery: searchQuery,
-      isShortFilms: isShortFilms,
-      moviesLoaded: false,
-    });
+    //this.setState({
+    //  searchQuery: searchQuery,
+    //  isShortFilms: isShortFilms,
+    //  moviesLoaded: false,
+    //});
 
-    MoviesApi.getMovies()
-    .then((moviesData) => {
-      moviesData.forEach((movie) => {
-        this.state.savedMovies.forEach((savedMovie) => {
-          if(movie.id === savedMovie.movieId){
-            movie.liked = true;
-            savedMovie.liked = true;
-            movie._id = savedMovie._id; // ДЛЯ УДОБСТВА
-          }
-        })
+    // Загрузка списка фильмов если ещё не загружен
+
+    console.log(route);
+
+    if(!this.state.moviesLoaded){
+      MoviesApi.getMovies()
+      .then((moviesData) => {
+        moviesData.forEach((movie) => {
+          this.state.savedMovies.forEach((savedMovie) => {
+            if(movie.id === savedMovie.movieId){
+              movie.liked = true;
+              savedMovie.liked = true;
+              movie._id = savedMovie._id; // ДЛЯ УДОБСТВА
+            }
+          })
+        });
+
+        console.log("LOADED MOVIES");
+
+        newState.moviesLoaded = true;
+
+        if(route === "movies"){
+          newState.movies = moviesData;
+          newState.searchedMovies = this.searchMovies(searchQuery, isShortFilms, moviesData);
+        }
+
+        else if(route === "saved-movies"){
+          newState.savedSearchedMovies = this.searchMovies(searchQuery, isShortFilms, this.state.savedMovies);
+        }
+
+        console.log(newState);
+
+        this.setState(newState);
+
+      })
+      .catch((err) => {
+        console.log(err);
       });
 
-      const filteredMovies = this.searchMovies(this.state.searchQuery, this.state.isShortFilms, moviesData);
+    // Поиск по уже загруженному списку фильмов
+    } else {
 
-      this.setState({
-        movies: moviesData,
-        filteredMovies: filteredMovies,
-        moviesLoaded: true,
-      });
+      console.log(route);
+      console.log(searchQuery);
 
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      if(route === "movies"){
+        newState.searchedMovies = this.searchMovies(searchQuery, isShortFilms, this.state.movies);
+      }
+
+      else if(route === "saved-movies"){
+        newState.savedSearchedMovies = this.searchMovies(searchQuery, isShortFilms, this.state.savedMovies);
+      }
+
+      this.setState(newState);
+    }
+
   }
 
   handleLikeClick = (film) => {
