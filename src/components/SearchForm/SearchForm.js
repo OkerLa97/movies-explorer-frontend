@@ -26,14 +26,27 @@ class SearchForm extends React.Component {
 
   handleSearchSubmit = (e) => {
     e.preventDefault();
-    this.props.onSearchSubmit(this.state.searchQuery, this.state.isShortFilms, this.props.route);
+
+    let searchQuery = this.state.searchQuery;
+    if(this.props.route !== "movies"){
+      searchQuery = this.state.searchQuerySaved;
+    }
+
+    this.props.onSearchSubmit(searchQuery, this.state.isShortFilms, this.props.route);
   }
 
   handleFilmsSwitch = (e) => {
+
     this.setState({
       isShortFilms: e.target.checked,
     });
-    this.props.onSearchSubmit(this.state.searchQuery, e.target.checked, this.props.route);
+
+    let searchQuery = this.state.searchQuery;
+    if(this.props.route !== "movies"){
+      searchQuery = this.state.searchQuerySaved;
+    }
+
+    this.props.onSearchSubmit(searchQuery, e.target.checked, this.props.route);
   }
 
   render(){
