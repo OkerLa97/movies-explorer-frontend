@@ -10,6 +10,7 @@ class Movies extends React.Component {
   static contextType = CurrentUserContext;
 
   render() {
+
     return (
       <>
         <Header route={this.props.route}/>

@@ -65,8 +65,6 @@ class MoviesCardList extends React.Component {
 
   render(){
 
-    console.log(this.props.films);
-
     let dataPull = this.props.films;
 
     // ОПРЕДЕЛЯЕМ КОЛИЧЕСТВО КАРТОЧЕК ДЛЯ ОТОБРАЖЕНИЯ
@@ -74,9 +72,6 @@ class MoviesCardList extends React.Component {
     if(endIdx > dataPull.length) endIdx = dataPull.length;
 
     const showedFilms = dataPull.slice(0, endIdx);
-
-    console.log(this.props.searchQuery);
-    console.log(this.props.wasSearchRequest);
 
     return (
       <section className="movie-card-list">

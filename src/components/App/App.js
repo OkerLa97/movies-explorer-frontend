@@ -330,8 +330,6 @@ class App extends React.Component {
       newState.searchQuery = searchQuery;
       newState.isShortFilms = isShortFilms;
 
-      console.log(this.state.wasSearchRequest);
-
       // ДЛЯ ЛОАДЕРА
       if(!this.state.wasSearchRequest){
         this.setState({
@@ -373,8 +371,6 @@ class App extends React.Component {
 
     // Загрузка списка фильмов если ещё не загружен
 
-    console.log(route);
-
     if(!this.state.moviesLoaded){
       MoviesApi.getMovies()
       .then((moviesData) => {
@@ -388,8 +384,6 @@ class App extends React.Component {
           })
         });
 
-        console.log("LOADED MOVIES");
-
         newState.moviesLoaded = true;
 
         if(route === "movies"){
@@ -400,8 +394,6 @@ class App extends React.Component {
         else if(route === "saved-movies"){
           newState.savedSearchedMovies = this.searchMovies(searchQuery, isShortFilms, this.state.savedMovies);
         }
-
-        console.log(newState);
 
         this.setState(newState);
 
