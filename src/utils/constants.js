@@ -2,18 +2,18 @@ const IMAGE_SERVER = "https://api.nomoreparties.co";
 
 // ЛЕЙАУТ ДЛЯ ДЕСКТОПА
 const DESKTOP_RESOLUTION = 1280;
-const DESKTOP_CARDS_CNT = 4;
-const DESKTOP_LOAD_MORE_CARDS_CNT = 3;
+const DESKTOP_CARDS_CNT = 7;
+const DESKTOP_LOAD_MORE_CARDS_CNT = 7;
 
 // ЛЕЙАУТ ДЛЯ ПЛАНШЕТА
 const TAB_RESOLUTION = 768;
-const TAB_CARDS_CNT = 4;
-const TAB_LOAD_MORE_CARDS_CNT = 2;
+const TAB_CARDS_CNT = 7;
+const TAB_LOAD_MORE_CARDS_CNT = 7;
 
 // ЛЕЙАУТ ДЛЯ МОБИЛЬНОГО
 const MOBILE_RESOLUTION = 480;
 const MOBILE_CARDS_CNT = 5;
-const MOBILE_LOAD_MORE_CARDS_CNT = 2;
+const MOBILE_LOAD_MORE_CARDS_CNT = 5;
 
 module.exports = {
 
