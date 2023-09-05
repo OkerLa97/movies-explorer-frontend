@@ -71,7 +71,13 @@ class MoviesCardList extends React.Component {
     let endIdx = this.state.currentIdx + this.maxCardsCnt
     if(endIdx > dataPull.length) endIdx = dataPull.length;
 
-    const showedFilms = dataPull.slice(0, endIdx);
+    let showedFilms = dataPull.slice(0, endIdx);
+
+    // ОТОБРАЖЕНИЕ ВСЕХ СОХРАНЕННЫХ ФИЛЬМОВ
+    if(this.props.isSavedMovies){
+      showedFilms = dataPull;
+      endIdx = dataPull.length;
+    }
 
     return (
       <section className="movie-card-list">
