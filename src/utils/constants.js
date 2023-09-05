@@ -15,6 +15,9 @@ const MOBILE_RESOLUTION = 480;
 const MOBILE_CARDS_CNT = 5;
 const MOBILE_LOAD_MORE_CARDS_CNT = 5;
 
+// КОРОТКОМЕТРАЖКИ
+const SHORT_MOVIE_DURATION = 40;
+
 module.exports = {
 
   IMAGE_SERVER,
@@ -28,4 +31,5 @@ module.exports = {
   MOBILE_RESOLUTION,
   MOBILE_CARDS_CNT,
   MOBILE_LOAD_MORE_CARDS_CNT,
+  SHORT_MOVIE_DURATION,
 };

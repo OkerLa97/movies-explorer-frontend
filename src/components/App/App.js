@@ -16,6 +16,10 @@ import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
+import {
+  SHORT_MOVIE_DURATION,
+} from "../../utils/constants";
+
 class App extends React.Component {
 
   static contextType = CurrentUserContext;
@@ -324,7 +328,7 @@ class App extends React.Component {
 
       const searchBlock = [movie.nameRU, movie.nameEN].join(" ").toLowerCase();
 
-      if(isShortFilms) return searchBlock.includes(searchQuery.toLowerCase()) && movie.duration <= 40;
+      if(isShortFilms) return searchBlock.includes(searchQuery.toLowerCase()) && movie.duration <= SHORT_MOVIE_DURATION;
       else return searchBlock.includes(searchQuery.toLowerCase());
 
     });
@@ -377,14 +381,7 @@ class App extends React.Component {
       return;
     }
 
-    //this.setState({
-    //  searchQuery: searchQuery,
-    //  isShortFilms: isShortFilms,
-    //  moviesLoaded: false,
-    //});
-
     // Загрузка списка фильмов если ещё не загружен
-
     if(!this.state.moviesLoaded){
       MoviesApi.getMovies()
       .then((moviesData) => {
