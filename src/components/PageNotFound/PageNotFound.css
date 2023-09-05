@@ -39,6 +39,14 @@
   font-weight: 400;
   line-height: normal;
   text-decoration: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.page-not-found__link:hover {
+  opacity: 0.8;
 }
 
 @media (max-width: 1279px){
