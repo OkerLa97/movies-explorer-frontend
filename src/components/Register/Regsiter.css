@@ -84,6 +84,11 @@
   cursor: pointer;
 }
 
+.register__submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .register__submit-btn:hover {
   opacity: 0.8;
 }

@@ -48,7 +48,7 @@ class Header extends React.Component {
                 <Link className={this.props.route === "movies" ? "header__link header__link-active" : "header__link"} to="/movies">Фильмы</Link>
               </li>
               <li className="header__link-item">
-                <Link className={this.props.route === "saved-movies" ? "header__link header__link-active" : "header__link"} to="/saved-movies">Сохранённые фильмы</Link>
+                <Link className={this.props.route === "saved-movies" ? "header__link header__link-active" : "header__link"} to="/saved-movies" onClick={this.props.onSavedMoviesOpened}>Сохранённые фильмы</Link>
               </li>
             </ul>
             <div className="header__account">

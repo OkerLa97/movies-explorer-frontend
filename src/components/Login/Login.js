@@ -12,6 +12,7 @@ class Login extends React.Component {
       errorMessage: "",
       errorInputTag: "",
       submitText: "Войти",
+      valid: false,
     }
   }
 
@@ -28,6 +29,25 @@ class Login extends React.Component {
     var newState = {};
     newState[tag] = element.value;
 
+    const regExp = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+    if(this.state.email !== "" && tag !== "email") {
+      if (!regExp.test(this.state.email)) {
+        newState.errorMessage = "Некорректный email";
+        newState.errorInputTag = "email";
+        newState.valid = false;
+        this.setState(newState);
+        return;
+      }
+    } else if(tag === "email") {
+      if (!regExp.test(element.value)) {
+        newState.errorMessage = "Некорректный email";
+        newState.errorInputTag = tag;
+        newState.valid = false;
+        this.setState(newState);
+        return;
+      }
+    }
+
     if (!element.validity.valid) {
       newState.errorMessage = element.validationMessage;
       newState.errorInputTag = tag;
@@ -35,6 +55,9 @@ class Login extends React.Component {
       newState.errorMessage = "";
       newState.errorInputTag = "";
     }
+
+    if (this.state.name !== "" && this.state.email !== "" && this.state.password !== "" && newState.errorMessage === "") newState.valid = true;
+    else newState.valid = false;
 
     this.setState(newState);
   }
@@ -58,6 +81,9 @@ class Login extends React.Component {
 
     const errorMessage = this.props.authErrorMessage !== "" ? this.props.authErrorMessage : this.state.errorMessage;
 
+    var submitText = this.state.submitText;
+    if(this.props.authErrorMessage !== "") submitText = "Войти";
+
     return (
       <section className="login">
         <Link className="login__logo-link" to="/" replace >
@@ -68,13 +94,13 @@ class Login extends React.Component {
 
           <label className="login__label">E-mail</label>
           <input className={this.state.errorInputTag === "email" ? "login__field login__field-error" : "login__field"} type="email" minLength="2" maxLength="40" placeholder="E-Mail ..." required value={this.state.email} name="email" onChange={this.handleEmailChange} />
+          {this.state.errorInputTag === "email" ? <label className="login__error-label">{errorMessage}</label> : ""}
 
           <label className="login__label">Пароль</label>
           <input className={this.state.errorInputTag === "password" ? "login__field login__field-error" : "login__field"} type="password" minLength="8" maxLength="200" placeholder="Пароль ..."  required value={this.state.password} name="password" onChange={this.handlePasswordChange} />
+          {this.state.errorInputTag === "password" ? <label className="login__error-label">{errorMessage}</label> : ""}
 
-          <label className="login__error-label">{errorMessage}</label>
-
-          <button className="login__submit-btn" type="submit">{this.state.submitText}</button>
+          <button className="login__submit-btn" disabled={!this.state.valid} type="submit">{submitText}</button>
           <div className="login__login">
             <label className="login__login-is-login-label">Ещё не зарегистрированы?</label>
             <Link className="login__link" to="/signup" replace >Регистрация</Link>

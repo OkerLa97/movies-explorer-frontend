@@ -1,123 +1,35 @@
-import DemoCard1 from "../images/demo-card-1.png";
-import DemoCard2 from "../images/demo-card-2.png";
-import DemoCard3 from "../images/demo-card-3.png";
-import DemoCard4 from "../images/demo-card-4.png";
-import DemoCard5 from "../images/demo-card-5.png";
-import DemoCard6 from "../images/demo-card-6.png";
-import DemoCard7 from "../images/demo-card-7.png";
+const IMAGE_SERVER = "https://api.nomoreparties.co";
 
-// 1. Стандартные значения (Конфигурация)
-export const initialFilms = [
+// ЛЕЙАУТ ДЛЯ ДЕСКТОПА
+const DESKTOP_RESOLUTION = 1280;
+const DESKTOP_CARDS_CNT = 7;
+const DESKTOP_LOAD_MORE_CARDS_CNT = 7;
 
-  {
-    country: "",
-    duration: 102,
-    year: "",
-    description: "",
-    image: DemoCard1,
-    trailerLink: "",
-    thumbnail: "",
-    owner: "",
-    movieId: "",
-    nameRU: "33 слова о дизайне",
-    nameEN: "",
+// ЛЕЙАУТ ДЛЯ ПЛАНШЕТА
+const TAB_RESOLUTION = 768;
+const TAB_CARDS_CNT = 7;
+const TAB_LOAD_MORE_CARDS_CNT = 7;
 
-    liked: true
-  },
+// ЛЕЙАУТ ДЛЯ МОБИЛЬНОГО
+const MOBILE_RESOLUTION = 480;
+const MOBILE_CARDS_CNT = 5;
+const MOBILE_LOAD_MORE_CARDS_CNT = 5;
 
-  {
-    country: "",
-    duration: 102,
-    year: "",
-    description: "",
-    image: DemoCard2,
-    trailerLink: "",
-    thumbnail: "",
-    owner: "",
-    movieId: "",
-    nameRU: "Киноальманах «100 лет дизайна»",
-    nameEN: "",
+// КОРОТКОМЕТРАЖКИ
+const SHORT_MOVIE_DURATION = 40;
 
-    liked: true,
-  },
+module.exports = {
 
-  {
-    country: "",
-    duration: 102,
-    year: "",
-    description: "",
-    image: DemoCard3,
-    trailerLink: "",
-    thumbnail: "",
-    owner: "",
-    movieId: "",
-    nameRU: "В погоне за Бенкси",
-    nameEN: "",
+  IMAGE_SERVER,
 
-    liked: false,
-  },
-
-  {
-    country: "",
-    duration: 102,
-    year: "",
-    description: "",
-    image: DemoCard4,
-    trailerLink: "",
-    thumbnail: "",
-    owner: "",
-    movieId: "",
-    nameRU: "Баския: Взрыв реальности",
-    nameEN: "",
-
-    liked: false,
-  },
-
-  {
-    country: "",
-    duration: 102,
-    year: "",
-    description: "",
-    image: DemoCard5,
-    trailerLink: "",
-    thumbnail: "",
-    owner: "",
-    movieId: "",
-    nameRU: "Бег это свобода",
-    nameEN: "",
-
-    liked: true,
-  },
-
-  {
-    country: "",
-    duration: 102,
-    year: "",
-    description: "",
-    image: DemoCard6,
-    trailerLink: "",
-    thumbnail: "",
-    owner: "",
-    movieId: "",
-    nameRU: "Книготорговцы",
-    nameEN: "",
-
-    liked: false,
-  },
-
-  {
-    country: "",
-    duration: 102,
-    year: "",
-    description: "",
-    image: DemoCard7,
-    trailerLink: "",
-    thumbnail: "",
-    owner: "",
-    movieId: "",
-    nameRU: "Когда я думаю о Германии ночью",
-    nameEN: "",
-
-    liked: false,
-  }
-];
+  DESKTOP_RESOLUTION,
+  DESKTOP_CARDS_CNT,
+  DESKTOP_LOAD_MORE_CARDS_CNT,
+  TAB_RESOLUTION,
+  TAB_CARDS_CNT,
+  TAB_LOAD_MORE_CARDS_CNT,
+  MOBILE_RESOLUTION,
+  MOBILE_CARDS_CNT,
+  MOBILE_LOAD_MORE_CARDS_CNT,
+  SHORT_MOVIE_DURATION,
+};

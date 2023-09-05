@@ -15,3 +15,5 @@ JavaScript был реализован модулями в стиле ООП.
 
 [Ссылка на GitHub](https://github.com/OkerLa97/movies-explorer-frontend)
 [Ссылка на Макет](https://disk.yandex.ru/d/hT6dRoYK-FOgew)
+[Ссылка на проект](https://oker97.nomoredomains.rocks)
+[Ссылка на Пулл-реквест level-3](https://github.com/OkerLa97/movies-explorer-frontend/pull/2)
