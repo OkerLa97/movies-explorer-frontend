@@ -167,6 +167,7 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Movies}
                     isSavedMovies={false}
+                    onSavedMoviesOpened={this.handleSavedMoviesOpened}
                     movies={this.state.searchedMovies}
                     route='movies'
                     loggedIn={this.state.hasJWT}
@@ -200,6 +201,7 @@ class App extends React.Component {
                   <ProtectedRouteElement
                     element={Profile}
                     loggedIn={this.state.hasJWT}
+                    onSavedMoviesOpened={this.handleSavedMoviesOpened}
                     onLogout={this.handleLogout}
                     onUpdateUser={this.handleUpdateUser}
                   />
@@ -215,6 +217,14 @@ class App extends React.Component {
         </div>
       </CurrentUserContext.Provider>
     );
+  }
+
+  handleSavedMoviesOpened = () => {
+    this.setState({
+      savedSearchedMovies: this.state.savedMovies,
+      savedMoviesSearchQuery: "",
+      savedMoviesIsShortFilms: false,
+    });
   }
 
   handleRegisterUser = (data) => {
