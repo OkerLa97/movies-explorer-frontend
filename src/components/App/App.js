@@ -106,11 +106,15 @@ class App extends React.Component {
       const userData = userDataResponse.data;
       const savedMoviesData = savedMoviesDataResponse.data;
 
+      savedMoviesData.forEach((savedMovie) => {
+        savedMovie.liked = true;
+      });
+
       // ПРОВЕРЯЕМ НА НАЛИЧИЕ ПОИСКА
       let searchQuery = localStorage.getItem("searchQuery");
       if(!searchQuery) searchQuery = "";
 
-      let isShortFilms = localStorage.getItem("isShortFilms")
+      let isShortFilms = localStorage.getItem("isShortFilms");
       if(!isShortFilms) isShortFilms = false;
       else isShortFilms = isShortFilms === "true" ? true : false;
 
@@ -487,8 +491,11 @@ class App extends React.Component {
           return movie._id !== film._id;
         });
 
+        const savedSearchedMovies = this.searchMovies(this.state.savedMoviesSearchQuery, this.state.savedMoviesIsShortFilms, savedMovies);
+
         this.setState({
           savedMovies: savedMovies,
+          savedSearchedMovies: savedSearchedMovies,
           toastOpened: true,
           toastText: "Фильм успешно удалён!",
         });
